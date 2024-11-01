@@ -1,0 +1,38 @@
+/* Container for each reward badge */
+.reward-badge-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  background-color: #f9f9f9; /* Light background for the badge container */
+}
+
+/* Reward badge number styling */
+.reward-number {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Styling for the reward badge images */
+.reward-badge {
+  width: 16px;
+  height: 16px;
+}
+
+/* Blinking effect applied only to the image */
+.reward-badge {
+  animation: blink-animation 1.5s steps(5, start) infinite;
+}
+
+/* Blinking keyframe */
+@keyframes blink-animation {
+  0%, 100% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0.5;
+  }
+}

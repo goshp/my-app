@@ -1,0 +1,73 @@
+.table-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.table-container h2 {
+  font-size: 1.25em;
+  padding: 8px 10px;
+  border-bottom: 1px solid #ddd;
+  margin: 0;
+  color: #fafafa;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+thead th {
+  padding: 10px;
+  text-align: left;
+  color: #555;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+tbody td {
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+  color: #333;
+}
+
+.rewards-container {
+  display: flex;
+  gap: 8px;
+}
+
+.reward-item {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 4px 6px;
+  border-radius: 12px;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.reward-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  animation: blink 1.5s infinite;
+}
+
+

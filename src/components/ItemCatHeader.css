@@ -1,0 +1,91 @@
+/* Container for the header */
+.item-cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Company Logo */
+.company-logo {
+  height: 45px;
+  margin-right: 20px;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-link {
+  color: #4a4a4a;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.nav-link:hover {
+  color: #333;
+}
+
+.active-link {
+  color: #004c3f;
+  font-weight: bold;
+  background-color: #e3f6e8;
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+/* Badge Icons */
+.badge-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-right: 15px;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badge img {
+  width: 24px;
+  height: 24px;
+}
+
+.badge span {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Profile Icon */
+.profile-icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+  /* Subtle Glow Animation */
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+  
+.ItemCatblink {
+    animation: blink 1.5s infinite;
+}

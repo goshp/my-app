@@ -1,0 +1,26 @@
+.filters {
+    display: flex;
+    align-items: center;
+    gap: -10px;
+    padding: 10px 0;
+    margin-top: auto;
+}
+
+.filter-select, .search-bar {
+    border-radius: 12px;
+    font-size: 0.875em;
+    padding: 6px 12px;
+    background-color: #f6f8fa;
+    border: 1px solid #e0e0e0;
+    box-shadow: none;
+    height: 30px;
+}
+
+.search-bar .MuiInputBase-root {
+    padding: 0;
+    height: 100%;
+}
+
+.search-icon {
+    color: #a0a0a0;
+}

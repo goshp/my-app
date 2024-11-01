@@ -1,0 +1,16 @@
+.status-dropdown-container {
+    display: flex;
+    align-items: center;
+}
+
+.status-dropdown {
+    min-width: 100px; /* Smaller dropdown width */
+    margin-right: 8px; /* Space between dropdown and dot */
+    font-size: 0.875em; /* Optional: reduce font size for smaller look */
+    height: 20px;
+    border-radius: 6px;
+}
+
+.status-dot {
+    font-size: 0.75em; /* Smaller dot size */
+}

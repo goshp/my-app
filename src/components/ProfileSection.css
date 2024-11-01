@@ -1,0 +1,80 @@
+/* ProfileSection.css */
+
+.profile-section {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Ensures the sections don’t expand too wide on large screens */
+    margin-bottom: 24px;
+  }
+  
+  /* Title and subtitle styling */
+  .profile-section h5 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .profile-section p {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 16px;
+  }
+  
+  /* Form fields styling */
+  .profile-section .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  
+  .profile-section .MuiTextField-root,
+  .profile-section .MuiFormControl-root {
+    margin-bottom: 16px;
+  }
+  
+  /* Align the form fields in two columns on larger screens */
+  .profile-section form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  @media (min-width: 600px) {
+    .profile-section form {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  /* Upload area styling */
+  .profile-section .upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px dashed #ced4da;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: #6c757d;
+    text-align: center;
+  }
+  
+  /* Buttons styling */
+  .profile-section .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+  
+  .profile-section .MuiButton-outlined {
+    color: #6c757d;
+    border-color: #ced4da;
+  }
+  
+  .profile-section .MuiButton-contained {
+    background-color: #28a745;
+    color: #ffffff;
+  }
+  

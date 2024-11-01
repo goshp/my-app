@@ -1,0 +1,92 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.nav {
+    display: flex;
+    gap: 15px;
+    font-size: 1em;
+    font-weight: 600;
+    color: #555;
+}
+
+.nav span {
+    cursor: pointer;
+    color: #555;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav .active {
+    color: #28a745;
+    background-color: #e6f7ee;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.nav span:hover {
+    color: #28a745;
+    background-color: #e6f7ee;
+}
+
+/* Badge and Profile Layout */
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.badge-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.badge-number {
+    font-size: 0.85em;
+    color: #555; /* Number color without background */
+}
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensures it stays above other content */
+    background-color: white; /* Set background to prevent transparency issues */
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+/* Blinking Animation */
+@keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+  
+.scanblink {
+    animation: blink 1.5s infinite;
+}
