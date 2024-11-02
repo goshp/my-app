@@ -9,9 +9,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import badgeIcon1 from '../assets/image-910@2x.png';
 import badgeIcon2 from '../assets/image-911@2x.png';
 import ItemCatHeader from '../components/ItemCatHeader';
+import AddItemCatModal from '../components/AddItemCatModal'; // Import the modal component
 import './ItemCategories.css';
 
-const sampleData = [
+const initialData = [
   { id: 1, name: "Plastic Bottles", type: "Recyclable", description: "Spiral wound containers are included in a provincial recycling program...", rewards: { points: 10, tokens: 1 }, image: "https://via.placeholder.com/40", acceptance: "Inactive" },
   { id: 2, name: "Plastic Fruit & Vegetable Containers", type: "Recyclable", description: "Using toiletry bottles when you travel allows you to bring all your favourite...", rewards: { points: 10, tokens: 1 }, image: "https://via.placeholder.com/40", acceptance: "Active" },
 ];
@@ -19,9 +20,31 @@ const sampleData = [
 const ItemCategories = () => {
   const [sortOption, setSortOption] = useState("Default");
   const [page, setPage] = useState(1);
+  const [data, setData] = useState(initialData);
+  const [isModalOpen, setModalOpen] = useState(false);
 
-  const handleSortChange = (event) => {
-    setSortOption(event.target.value);
+  // Handler for opening and closing modal
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
+
+  // Handler for sorting (optional)
+  const handleSortChange = (event) => setSortOption(event.target.value);
+
+  // Handler for saving new item data from modal
+  const handleSaveNewItem = (newItem) => {
+    setData(prevData => [
+      ...prevData,
+      {
+        id: prevData.length + 1,
+        name: newItem.itemCategory,
+        type: newItem.categoryType,
+        description: "New item description...", // You can add a description field to modal form if needed
+        rewards: { points: 10, tokens: 1 }, // Set rewards or add fields in modal
+        image: "https://via.placeholder.com/40", // Placeholder or set to uploaded image
+        acceptance: newItem.activeStatus
+      }
+    ]);
+    handleCloseModal(); // Close modal after saving
   };
 
   return (
@@ -34,7 +57,9 @@ const ItemCategories = () => {
           <Typography variant="h5" component="h1" className="title">Item Categories</Typography>
           <Typography variant="body2" color="textSecondary">See all of your retail deals here.</Typography>
         </Box>
-        <Button variant="contained" color="success" startIcon={<AddIcon />}>Add New</Button>
+        <Button variant="contained" color="success" startIcon={<AddIcon />} onClick={handleOpenModal}>
+          Add New
+        </Button>
       </Box>
 
       {/* Sort Controls */}
@@ -72,7 +97,7 @@ const ItemCategories = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sampleData.map((item) => (
+            {data.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.type}</TableCell>
@@ -108,7 +133,7 @@ const ItemCategories = () => {
 
       {/* Pagination */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mt={3}>
-        <Typography variant="body2">1-10 of 559</Typography>
+        <Typography variant="body2">1-10 of {data.length}</Typography>
         <Pagination
           count={10}
           page={page}
@@ -116,6 +141,9 @@ const ItemCategories = () => {
           color="primary"
         />
       </Box>
+
+      {/* Add Item Category Modal */}
+      <AddItemCatModal open={isModalOpen} onClose={handleCloseModal} onSave={handleSaveNewItem} />
     </Box>
   );
 };

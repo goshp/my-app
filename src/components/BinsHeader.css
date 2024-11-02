@@ -1,0 +1,69 @@
+.bins-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .bins-logo {
+    height: 40px;
+  }
+  
+  .bins-nav-links {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+    justify-content: center;
+  }
+  
+  .bins-nav-link {
+    color: #4a4a4a;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .bins-nav-link:hover,
+  .active-link {
+    color: #333;
+    border-bottom: 2px solid #004c3f;
+  }
+  
+  .bins-badge-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .badge-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .bins-profile-icon {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+    /* Subtle Glow Animation */
+    @keyframes blink {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.3;
+      }
+    }
+    
+  .badge-icon {
+      animation: blink 1.5s infinite;
+  }

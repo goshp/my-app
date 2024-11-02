@@ -1,0 +1,65 @@
+.modal-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    outline: none;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.modal-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-control-half {
+    width: calc(50% - 10px); /* Half-width controls for two-column layout */
+}
+
+.form-control-full {
+    width: 100%; /* Full-width control for single row */
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.cancel-button, .update-button {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-button {
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+}
+
+.cancel-button:hover {
+    background-color: #e0e0e0;
+}
+
+.update-button {
+    color: #ffffff;
+    background-color: #28a745;
+}
+
+.update-button:hover {
+    background-color: #218838;
+}

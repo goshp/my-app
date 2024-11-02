@@ -14,7 +14,7 @@ const ProfileHeader = () => {
     { label: 'Scanned Items', path: '/scanned-items' },
     { label: 'Item Categories', path: '/item-categories' },
     { label: 'Service Areas', path: '/service-areas' },
-    { label: 'Bins', path: '/bins' },
+    { label: 'Bins', path: '/bins-data' },
     { label: 'Users', path: '/users' },
     { label: 'Transactions', path: '/transactions' },
     { label: 'E-store', path: '/e-store' },
