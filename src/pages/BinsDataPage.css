@@ -1,0 +1,67 @@
+.bins-data-page {
+    padding: 20px 40px; /* Added horizontal padding to bring it closer to the screen edges */
+}
+
+.bins-content {
+    max-width: 1200px; /* Increase width to fit more screen space */
+    width: 100%;
+    margin: auto;
+}
+
+.bins-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.bins-subtitle {
+    margin-bottom: 20px;
+}
+
+/* Filters Section */
+.bins-filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.filter-dropdown {
+    width: 150px;
+}
+
+.sort-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    color: #4A4A4A;
+    font-weight: 500;
+    gap: 2px;
+}
+
+.text-field {
+    width: 150px;
+}
+
+.clear-button {
+    color: #1976d2;
+    border: 1px solid #1976d2;
+}
+
+/* Table Container */
+.table-container {
+    margin-top: 20px;
+}
+
+/* Pagination Section */
+.bins-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.rows-per-page,
+.jump-to-page {
+    width: 100px;
+}
