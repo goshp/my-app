@@ -59,7 +59,7 @@ const BinsDataPage = () => {
             </Box>
           </Box>
 
-          {/* Right Section: Bin Name, Status, Search */}
+          {/* Bin Name, Status, Search */}
           <Box display="flex" alignItems="center" gap={2}>
             <TextField
               variant="outlined"
@@ -121,13 +121,21 @@ const BinsDataPage = () => {
                     <img src={bin.image} alt={bin.name} width={40} height={40} />
                   </TableCell>
                   <TableCell>{bin.pickupTime}</TableCell>
-                  <TableCell>{bin.location}</TableCell>
+                  <TableCell>
+                    <div className="location-cell">{bin.location}</div>
+                  </TableCell>
                   <TableCell>{bin.status}</TableCell>
                   <TableCell>{bin.collector}</TableCell>
                   <TableCell>{bin.schedule}</TableCell>
                   <TableCell>
-                    <IconButton color="primary"><EditIcon /></IconButton>
-                    <IconButton color="error"><DeleteIcon /></IconButton>
+                    <div className="action-icons">
+                      <IconButton color="primary">
+                          <EditIcon />
+                      </IconButton>
+                      <IconButton color="error">
+                          <DeleteIcon />
+                      </IconButton>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -135,7 +143,7 @@ const BinsDataPage = () => {
           </Table>
         </TableContainer>
 
-        {/* Pagination Section */}
+        {/* Pagination */}
         <Box className="bins-pagination">
           <Typography variant="body2">1-10 of 559</Typography>
           <Pagination

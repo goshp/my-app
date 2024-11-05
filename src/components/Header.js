@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import recycleLogo from '../assets/rcycle-combomarkremovebgpreview-1@2x.png';
 import badgeIcon1 from '../assets/image-92@2x.png';
 import badgeIcon2 from '../assets/image-91@2x.png';
 import badgeIcon3 from '../assets/image-93@2x.png';
 import profileIcon from '../assets/avatar3@3x.png';
-import { IconButton, Menu, MenuItem, Typography } from '@mui/material'; // Removed Box
+import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import './Header.css';
-import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOpen = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
   const handleMenuClick = (option) => {
     handleClose();
-    if (option === 'Profile') navigate('/profile');
-    else if (option === 'Logout') navigate('/logout');
-  };
+    if (option === 'Profile') {
+      navigate('/profile');
+    } else if (option === 'Logout') {
+      // Clear user session (remove token from local storage)
+      localStorage.removeItem('authToken');
+      
+      // Redirect to login page and replace history to prevent going back
+      navigate('/', { replace: true });
+    }
+  };  
 
   const links = [
     { label: 'Scanned Items', path: '/scanned-items' },
     { label: 'Acceptable Items', path: '/item-categories' },
     { label: 'Service Areas', path: '/service-areas' },
     { label: 'Bins', path: '/bins-data' },
-    { label: 'Employees', path: '/employees' },
+    { label: 'Employees', path: '/employees-data' },
   ];
 
   return (
@@ -36,7 +44,7 @@ const Header = () => {
         {links.map((link) => (
           <Typography
             key={link.label}
-            className={`nav-link ${link.label === 'Scanned Items' ? 'active-link' : ''}`}
+            className={`nav-link ${location.pathname === link.path ? 'active-link' : ''}`}
             onClick={() => navigate(link.path)}
           >
             {link.label}
@@ -58,7 +66,6 @@ const Header = () => {
           <span className="badge-number">99+</span>
         </div>
 
-        {/* Profile Icon with Dropdown */}
         <IconButton onClick={handleOpen}>
           <img src={profileIcon} alt="Profile" className="profile-icon" />
         </IconButton>

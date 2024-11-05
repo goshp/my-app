@@ -2,19 +2,30 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
+    padding: 8px 20px; /* Reduced top/bottom padding slightly */
     background-color: #ffffff;
     border-bottom: 1px solid #ddd;
+    top: 0;
+    z-index: 1000;
+    position: fixed; /* Fixes the header to the top */
+    left: 0;
+    right: 0;
+}
+html, body {
+    margin: 0;
+    padding: 0;
 }
 
+/* Logo Styling */
 .logo {
     height: 40px;
     margin-right: 10px;
 }
 
+/* Navigation Styling */
 .nav {
     display: flex;
-    gap: 15px;
+    gap: 10px; /* Reduced gap between nav items */
     font-size: 1em;
     font-weight: 600;
     color: #555;
@@ -23,7 +34,7 @@
 .nav span {
     cursor: pointer;
     color: #555;
-    padding: 5px 10px;
+    padding: 4px 10px; /* Adjusted padding for more compact appearance */
     border-radius: 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -44,13 +55,13 @@
 .header-icons {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px; /* Reduced gap between icons */
 }
 
 .badge-container {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px; /* Reduced gap between badge and number */
 }
 
 .badge-icon {
@@ -60,33 +71,26 @@
 
 .badge-number {
     font-size: 0.85em;
-    color: #555; /* Number color without background */
+    color: #555;
 }
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 1000; /* Ensures it stays above other content */
-    background-color: white; /* Set background to prevent transparency issues */
-    padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
-  }
-  
+
 .profile-icon {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
+
 /* Blinking Animation */
 @keyframes blink {
     0%, 100% {
-      opacity: 1;
+        opacity: 1;
     }
     50% {
-      opacity: 0.3;
+        opacity: 0.3;
     }
-  }
-  
+}
+
 .scanblink {
     animation: blink 1.5s infinite;
 }

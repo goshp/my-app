@@ -15,7 +15,7 @@ const BinsHeader = () => {
     { label: 'Acceptable Items', path: '/item-categories' },
     { label: 'Service Areas', path: '/service-areas' },
     { label: 'Bins', path: '/bins-data' },
-    { label: 'Employees', path: '/employees' },
+    { label: 'Employees', path: '/employees-data' },
   ];
 
   return (

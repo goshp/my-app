@@ -1,13 +1,69 @@
-import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, FormControl, Select, MenuItem, TextField, InputAdornment
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import SearchIcon from '@mui/icons-material/Search';
 import StatusDropdown from './StatusDropdown';
 import badge1 from '../assets/image-910@2x.png';
 import badge2 from '../assets/image-911@2x.png';
 import './ItemsTable.css';
 
-const ItemsTable = ({ title, date, data, onEdit }) => {
+const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
   const [statuses, setStatuses] = useState(data.map((item) => item.status));
+  const [filteredData, setFilteredData] = useState(data);
+  const [sortOption, setSortOption] = useState("Default");
+  const [brandFilter, setBrandFilter] = useState('');
+  const [dimensionFilter, setDimensionFilter] = useState('');
+  const [partFilter, setPartFilter] = useState('');
+  const [searchText, setSearchText] = useState('');
+
+  const applyFilters = useCallback(() => {
+    let filteredItems = [...data];
+
+    // Sort items if a sort option is selected
+    if (sortOption === "A-Z") {
+      filteredItems.sort((a, b) => a.item.localeCompare(b.item));
+    } else if (sortOption === "Z-A") {
+      filteredItems.sort((a, b) => b.item.localeCompare(a.item));
+    }
+
+    // Apply Brand Filter
+    if (brandFilter) {
+      filteredItems = filteredItems.filter((item) => item.brand === brandFilter);
+    }
+
+    // Apply Dimension Filter
+    if (dimensionFilter) {
+      filteredItems = filteredItems.filter((item) => item.dims === dimensionFilter);
+    }
+
+    // Apply Part Filter
+    if (partFilter) {
+      filteredItems = filteredItems.filter((item) => item.parts.includes(partFilter));
+    }
+
+    // Apply Search Filter
+    if (searchText) {
+      const lowerSearchText = searchText.toLowerCase();
+      filteredItems = filteredItems.filter((item) =>
+        item.item.toLowerCase().includes(lowerSearchText) ||
+        item.brand.toLowerCase().includes(lowerSearchText) ||
+        item.dims.toLowerCase().includes(lowerSearchText) ||
+        item.parts.toLowerCase().includes(lowerSearchText)
+      );
+    }
+
+    setFilteredData(filteredItems);
+  }, [data, sortOption, brandFilter, dimensionFilter, partFilter, searchText]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [applyFilters]);
+
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
+  };
 
   const handleStatusChange = (index, newStatus) => {
     const updatedStatuses = [...statuses];
@@ -17,14 +73,88 @@ const ItemsTable = ({ title, date, data, onEdit }) => {
 
   return (
     <TableContainer component={Paper} className="table-container">
+      <div style={{ padding: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div>
+          <h2 style={{ margin: 0 }}>{title}</h2>
+          <p style={{ fontSize: '0.875em', color: '#888', marginTop: '4px' }}>{subtitle}</p>
+          {date && <p style={{ fontSize: '0.875em', color: '#666', marginTop: '4px' }}>{date}</p>}
+        </div>
+
+        {/* Filters and Sort - Display only if showFilters is true */}
+        {showFilters && (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <FormControl variant="outlined" size="small">
+                <Select
+                  value={sortOption}
+                  onChange={handleSortChange}
+                  displayEmpty
+                >
+                  <MenuItem value="Default">Sort by: Default</MenuItem>
+                  <MenuItem value="A-Z">A - Z</MenuItem>
+                  <MenuItem value="Z-A">Z - A</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <FormControl variant="outlined" size="small">
+                <Select
+                  value={brandFilter}
+                  onChange={(e) => setBrandFilter(e.target.value)}
+                  displayEmpty
+                >
+                  <MenuItem value="">Select Brand</MenuItem>
+                  <MenuItem value="Apple">Apple</MenuItem>
+                  <MenuItem value="Starbucks">Starbucks</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl variant="outlined" size="small">
+                <Select
+                  value={dimensionFilter}
+                  onChange={(e) => setDimensionFilter(e.target.value)}
+                  displayEmpty
+                >
+                  <MenuItem value="">Dimensions</MenuItem>
+                  <MenuItem value="12 oz PET">12 oz PET</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl variant="outlined" size="small">
+                <Select
+                  value={partFilter}
+                  onChange={(e) => setPartFilter(e.target.value)}
+                  displayEmpty
+                >
+                  <MenuItem value="">Parts</MenuItem>
+                  <MenuItem value="Label">Label</MenuItem>
+                  <MenuItem value="Tag">Tag</MenuItem>
+                </Select>
+              </FormControl>
+
+              <TextField
+                variant="outlined"
+                size="small"
+                placeholder="Search"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Table */}
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell colSpan={10} style={{ textAlign: 'left', paddingBottom: '4px' }}>
-              <span style={{ fontSize: '1.25em', fontWeight: 'bold' }}>{title}</span>
-              <span style={{ fontSize: '0.875em', color: '#888', marginLeft: '10px' }}>{date}</span>
-            </TableCell>
-          </TableRow>
           <TableRow>
             <TableCell>Image</TableCell>
             <TableCell>Item Category</TableCell>
@@ -39,7 +169,7 @@ const ItemsTable = ({ title, date, data, onEdit }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, index) => (
+          {filteredData.map((row, index) => (
             <TableRow key={index}>
               <TableCell><img src="battery-icon.png" alt={row.item} style={{ width: 40 }} /></TableCell>
               <TableCell>{row.item}</TableCell>
@@ -54,16 +184,13 @@ const ItemsTable = ({ title, date, data, onEdit }) => {
               <TableCell>{row.parts}</TableCell>
               <TableCell>
                 <div className="rewards-container">
-                  {/* Silver Badge */}
                   <div className="reward-item">
                     <span className="reward-number">1</span>
-                    <img src={badge1} alt="Silver Badge" className="reward-icon blinking" />
+                    <img src={badge1} alt="Silver Badge" className="reward-icon" />
                   </div>
-
-                  {/* Green Badge */}
                   <div className="reward-item">
                     <span className="reward-number">10</span>
-                    <img src={badge2} alt="Green Badge" className="reward-icon blinking" />
+                    <img src={badge2} alt="Green Badge" className="reward-icon" />
                   </div>
                 </div>
               </TableCell>

@@ -1,6 +1,6 @@
 import React from 'react';
-import ProfileHeader from './components/ProfileHeader';
-import ProfileSection from './components/ProfileSection';
+import ProfileHeader from '../components/ProfileHeader';
+import ProfileSection from '../components/ProfileSection';
 import './ProfilePage.css';
 
 const ProfilePage = () => {

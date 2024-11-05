@@ -1,4 +1,4 @@
-/* Container for the header */
+/* Header Container */
 .serv-area-header {
     display: flex;
     align-items: center;
@@ -7,14 +7,13 @@
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
   }
-  
-  /* Company Logo */
+
   .company-logo {
     height: 40px;
     margin-right: 20px;
   }
   
-  /* Navigation Links */
+  /*navs*/
   .nav-links {
     display: flex;
     gap: 20px;
@@ -32,14 +31,15 @@
     color: #333;
   }
   
+  /*link*/
   .active-link {
     background-color: #e3f6e8;
     padding: 5px 10px;
     border-radius: 8px;
     color: #004c3f;
   }
-  
-  /* Badge Icons */
+ 
+  /*badges*/
   .badge-icons {
     display: flex;
     align-items: center;
@@ -64,7 +64,6 @@
     color: #333;
   }
   
-  /* Profile Icon */
   .profile-icon {
     height: 35px;
     width: 35px;
@@ -72,6 +71,7 @@
     cursor: pointer;
   } 
 
+  /*badge animation*/
   @keyframes blink {
     0%, 100% {
       opacity: 1;
@@ -81,6 +81,6 @@
     }
   }
   
-.blink {
+.sblink {
     animation: blink 1.5s infinite;
 }
