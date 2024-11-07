@@ -19,7 +19,6 @@
   color: #888888;
 }
 
-/* Filters */
 .bins-filters {
   display: flex;
   justify-content: space-between;
@@ -27,16 +26,23 @@
   align-items: center;
 }
 
-.filter-dropdown, .text-field {
-  height: 40px; /* Ensure consistent height */
-  width: 150px;
-  font-size: 14px;
-  box-sizing: border-box; /* Consistent sizing */
+.left-filters {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.table-container .action-icons {
+.right-filters {
   display: flex;
-  gap: 10px; /* Space between icons */
+  align-items: center;
+  gap: 16px;
+}
+
+.filter-dropdown, .text-field, .status-filter {
+  height: 40px;
+  width: 150px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
 .sort-options {
@@ -50,26 +56,20 @@
   padding-left: 10px;
 }
 
-/* Table Container */
 .table-container {
   margin-top: 20px;
 }
 
 .location-cell {
-  white-space: normal;      /* Allows line breaks within the cell */
-  word-wrap: break-word;    /* Breaks long words onto the next line */
-  max-width: 200px;         /* Optional: limits the cell width for better readability */
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 200px;
 }
 
-/* Table Styling */
 .table-container .MuiTableCell-root {
   font-size: 14px;
-  padding: 5px; /* Smaller padding for compact icons */
-  color: #555
-}
-
-.table-container .MuiSvgIcon-root {
-  font-size: 20px; /* Adjust size to be smaller */
+  padding: 5px;
+  color: #555;
 }
 
 .table-container .MuiTableCell-head {
@@ -78,12 +78,20 @@
   background-color: #f9f9f9;
 }
 
-/* Image Styling in Table */
 .table-container img {
   width: 40px;
   height: 40px;
   object-fit: cover;
   border-radius: 4px;
+}
+
+.table-container .action-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.table-container .MuiSvgIcon-root {
+  font-size: 20px;
 }
 
 /* Pagination */
@@ -100,14 +108,9 @@
 }
 
 .bins-pagination .MuiPagination-root {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
 .rows-per-page, .jump-to-page {
   width: 100px;
-}
-
-.rows-per-page {
-  margin-right: 20px;
 }

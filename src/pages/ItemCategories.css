@@ -1,38 +1,128 @@
-/* Container for each reward badge */
+table .MuiTableCell-root.wrap-text {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
 .reward-badge-container {
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 8px;
+  padding: 5px 10px;
   border: 1px solid #e0e0e0;
   border-radius: 20px;
-  background-color: #f9f9f9; /* Light background for the badge container */
+  background-color: #f9f9f9;
 }
 
-/* Reward badge number styling */
 .reward-number {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: #333;
 }
 
-/* Styling for the reward badge images */
 .reward-badge {
-  width: 16px;
-  height: 16px;
-}
-
-/* Blinking effect applied only to the image */
-.reward-badge {
+  width: 15px !important;
+  height: 15px !important;
+  object-fit: contain;
+  margin-right: 4px;
   animation: blink-animation 1.5s steps(5, start) infinite;
 }
 
-/* Blinking keyframe */
+
+table .MuiTableCell-root {
+  padding: 12px 16px;
+  text-align: center;
+}
+
+
+.table-container .MuiTableCell-root.image-cell {
+  width: 80px;
+  text-align: center;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-container .MuiTableCell-root.image-cell img {
+  width: auto;
+  max-width: 100%;
+  max-height: 40px;
+  object-fit: contain;
+  display: block;
+}
+
+table .MuiTableCell-root img {
+  width: 100%;
+  max-width: 60px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+
+.table-container .MuiTableCell-root.wrap-text {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  max-width: 200px;
+  text-align: left;
+}
+
+.table-container .MuiTableCell-root {
+  text-align: left;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.table-container .MuiTableCell-root.description-cell {
+  text-align: left;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  padding-left: 8px;
+}
+
+.table-container .MuiTableCell-root.reward-cell,
+.table-container .MuiTableCell-root.image-cell,
+.table-container .MuiTableCell-root.actions-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 8px;
+}
+
+/* Pagination */
+.bins-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+}
+
+.bins-pagination .MuiTypography-root {
+  font-size: 14px;
+  color: #555;
+}
+
+.bins-pagination .MuiPagination-root {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rows-per-page, .jump-to-page {
+  width: 100px;
+}
+
+.rows-per-page {
+  margin-right: 20px;
+}
+
 @keyframes blink-animation {
   0%, 100% {
-      opacity: 1;
+    opacity: 1;
   }
   50% {
-      opacity: 0.5;
+    opacity: 0.5;
   }
 }

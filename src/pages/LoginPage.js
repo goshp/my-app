@@ -27,8 +27,7 @@ function LoginPage() {
     }
   };
 
-  // Return statement for the component layout
-  return (
+   return (
   <div className="login-container">
     <div className="login-card">
       <div className="logo-section">

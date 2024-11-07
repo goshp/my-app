@@ -1,0 +1,23 @@
+/* Center the labels above inputs, adjust padding, and ensure consistent spacing */
+
+.MuiDialogContent-root {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .MuiTextField-root {
+    width: 100%;
+  }
+  
+  .MuiDialogActions-root {
+    justify-content: space-between;
+  }
+  
+  button[aria-label="close"] {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    color: #888;
+  }
+  

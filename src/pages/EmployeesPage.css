@@ -1,21 +1,18 @@
-/* Main container styling */
 .employees-page {
   font-family: Arial, sans-serif;
-  padding: 80px 20px 20px; /* Ensure space from fixed header */
+  padding: 80px 20px 20px;
   background-color: #f9f9f9;
   z-index: 1;
 }
 
-/* Header layout adjustments */
 .employees-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 20px;
-  gap: 20px; /* Space between left and right sections */
+  gap: 20px;
 }
 
-/* Left section with title, subtitle, and filter */
 .header-title {
   display: flex;
   flex-direction: column;
@@ -40,7 +37,6 @@
   min-width: 160px;
 }
 
-/* Right section with add button and search */
 .header-controls {
   display: flex;
   flex-direction: column;
@@ -48,7 +44,6 @@
   align-items: flex-start;
 }
 
-/* Adjust the Add New button */
 .header-controls .add-new-btn {
   margin-top: 20px;
   background-color: #28a745;
@@ -60,7 +55,6 @@
   width: 200px;
 }
 
-/* Table styling */
 .table-container {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;

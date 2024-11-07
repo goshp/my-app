@@ -1,0 +1,33 @@
+/* Modal container styling */
+.MuiDialog-paper {
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* Form layout adjustments */
+.bin-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.file-upload {
+    margin-top: 8px;
+}
+
+/* Two-column layout for form fields */
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.upload-btn {
+    color: #1976d2;
+    border-color: #1976d2;
+    font-size: 0.875rem;
+}
+
+.cancel-btn, .save-btn {
+    width: 100%;
+    padding: 12px;
+}

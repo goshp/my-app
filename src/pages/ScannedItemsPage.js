@@ -5,12 +5,13 @@ import EditItemModal from '../components/EditItemModal';
 import { Pagination } from '@mui/material';
 import './ScannedItemsPage.css';
 
-const scannedItemsData = [
+// Initial data for scanned and arrived items
+const initialScannedItemsData = [
   { id: 1, item: "Battery", status: "Approved", brand: "Apple", dims: "12 oz PET", parts: "Label, Tag", rewards: 10, date: "17/12/2023", location: "Toronto" },
   { id: 2, item: "Paper Drink", status: "Pending", brand: "Starbucks", dims: "12 oz PET", parts: "Label, Tag", rewards: 10, date: "17/12/2023", location: "Toronto" },
 ];
 
-const arrivedItemsData = [
+const initialArrivedItemsData = [
   { id: 3, item: "Battery", status: "Approved", brand: "Starbucks", dims: "12 oz PET", parts: "Label, Tag", rewards: 10, date: "15/01/2024", location: "Toronto" },
   { id: 4, item: "Paper", status: "Approved", brand: "Apple", dims: "12 oz PET", parts: "Label, Tag", rewards: 10, date: "15/01/2024", location: "Toronto" },
 ];
@@ -26,15 +27,26 @@ const getFormattedDate = () => {
 };
 
 const ScannedItemsPage = () => {
+  const [scannedItemsData, setScannedItemsData] = useState(initialScannedItemsData);
+  const [arrivedItemsData, setArrivedItemsData] = useState(initialArrivedItemsData);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
+  // Open modal for editing
   const handleEditClick = (item) => {
     setSelectedItem(item);
     setModalOpen(true);
   };
 
+  // Update item data after editing
   const handleUpdateItem = (updatedItem) => {
+    const updateArray = (array) =>
+      array.map((item) =>
+        item.id === updatedItem.id ? updatedItem : item
+      );
+
+    setScannedItemsData(updateArray(scannedItemsData));
+    setArrivedItemsData(updateArray(arrivedItemsData));
     setModalOpen(false);
   };
 
@@ -65,7 +77,7 @@ const ScannedItemsPage = () => {
       <EditItemModal
         open={isModalOpen}
         onClose={() => setModalOpen(false)}
-        item={selectedItem}
+        itemData={selectedItem}  // Update to itemData
         onSave={handleUpdateItem}
       />
 

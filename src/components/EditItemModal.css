@@ -1,65 +1,43 @@
-.modal-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+.item-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.modal-title {
-  font-weight: bold;
-  margin-bottom: 20px;
+.item-edit-form .MuiTextField-root {
+    width: 100%; /* Ensures each input takes full width of its container */
 }
 
-.modal-form {
-  display: flex;
-  gap: 20px;
+.item-edit-form .file-upload {
+    margin-top: 16px;
+    width: 100%;
 }
 
-.form-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.file-upload img {
+    border-radius: 4px;
 }
 
-.form-control {
-  display: flex;
-  flex-direction: column;
+.MuiDialogActions-root {
+    justify-content: space-between;
 }
 
-.dropdown, .text-field {
-  height: 40px; /* Consistent height */
-  min-width: 220px; /* Consistent width for uniform appearance */
-  box-sizing: border-box;
+.cancel-btn {
+    color: #888;
+    border: 1px solid #888;
 }
 
-.image-upload {
-  margin-top: 16px;
-  text-align: center;
+.cancel-btn:hover {
+    background-color: #f0f0f0;
 }
 
-.modal-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+.save-btn {
+    background-color: #28a745;
+    color: white;
 }
-
-.cancel-button, .update-button {
-  width: 48%;
-  border-radius: 8px;
-  height: 40px; /* Match button height with inputs */
+.save-btn:hover {
+    background-color: #218838;
 }
-
-.update-button {
-  background-color: #00c853;
-  color: #ffffff;
-}
-
-.update-button:hover {
-  background-color: #00b249;
-}
+.item-edit-form .MuiTextField-root {
+    width: 100%;
+  }
+  

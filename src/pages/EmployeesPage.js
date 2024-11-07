@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Button, FormControl, Select, MenuItem, TextField, InputAdornment } from '@mui/material';
+import {
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Paper, IconButton, Button, FormControl, Select, MenuItem, TextField, InputAdornment,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
 import profileIcon from '../assets/avatar3@3x.png';
+import AddEmployeeModal from '../components/AddEmployeeModal';
 import './EmployeesPage.css';
 
-const employeesData = [
+const initialEmployeesData = [
   { id: 1, firstName: "Jason", lastName: "Charles", username: "jasong", email: "jason@rcycle.co" },
   { id: 2, firstName: "Charlie", lastName: "Mannish", username: "charlie", email: "jasonm@rcycle.co" },
   { id: 3, firstName: "Emerson", lastName: "Septimus", username: "Emerson887", email: "emerson@rcycle.co" },
@@ -16,7 +20,31 @@ const employeesData = [
 ];
 
 const EmployeesPage = () => {
+  const [employees, setEmployees] = useState(initialEmployeesData);
   const [searchText, setSearchText] = useState("");
+  const [sortOrder, setSortOrder] = useState(""); // State for sorting order
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  // Handle sorting change
+  const handleSortChange = (event) => {
+    const order = event.target.value;
+    setSortOrder(order);
+    sortEmployees(order);
+  };
+
+  // Function to sort employees
+  const sortEmployees = (order) => {
+    const sortedEmployees = [...employees].sort((a, b) => {
+      const key = 'firstName'; // Change to "username" or "email" for other fields
+      if (order === "A-Z") {
+        return a[key].localeCompare(b[key]);
+      } else if (order === "Z-A") {
+        return b[key].localeCompare(a[key]);
+      }
+      return 0;
+    });
+    setEmployees(sortedEmployees);
+  };
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
@@ -26,7 +54,31 @@ const EmployeesPage = () => {
     setSearchText("");
   };
 
-  const filteredEmployees = employeesData.filter(
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleAddEmployee = (newEmployee) => {
+    setEmployees((prevEmployees) => [
+      ...prevEmployees,
+      {
+        id: prevEmployees.length + 1,
+        ...newEmployee,
+      },
+    ]);
+    handleCloseModal();
+  };
+
+  const handleDeleteEmployee = (id) => {
+    setEmployees((prevEmployees) => prevEmployees.filter(employee => employee.id !== id));
+  };
+
+  // Filter employees based on search input
+  const filteredEmployees = employees.filter(
     (employee) =>
       employee.firstName.toLowerCase().includes(searchText.toLowerCase()) ||
       employee.lastName.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -39,22 +91,20 @@ const EmployeesPage = () => {
       <Header activePage="Employees" />
 
       <div className="employees-header">
-        {/* Left Section: Title, Subtitle and Filter */}
         <div className="header-title">
           <h2>Employee Data</h2>
           <p>See all of your employee details here.</p>
           <FormControl variant="outlined" size="small" className="filter-select">
-            <Select displayEmpty defaultValue="">
-              <MenuItem value="">Show: All employees</MenuItem>
-              <MenuItem value="Active">Active</MenuItem>
-              <MenuItem value="Inactive">Inactive</MenuItem>
+            <Select displayEmpty value={sortOrder} onChange={handleSortChange}>
+              <MenuItem value="">Show: Default Order</MenuItem>
+              <MenuItem value="A-Z">A - Z</MenuItem>
+              <MenuItem value="Z-A">Z - A</MenuItem>
             </Select>
           </FormControl>
         </div>
 
-        {/* Right Section: Add New Button and Search Bar */}
         <div className="header-controls">
-          <Button variant="contained" className="add-new-btn">
+          <Button variant="contained" className="add-new-btn" onClick={handleOpenModal}>
             + Add New
           </Button>
           <TextField
@@ -103,7 +153,7 @@ const EmployeesPage = () => {
                   <IconButton>
                     <EditIcon />
                   </IconButton>
-                  <IconButton>
+                  <IconButton onClick={() => handleDeleteEmployee(employee.id)} color="error">
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -112,6 +162,12 @@ const EmployeesPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <AddEmployeeModal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleAddEmployee}
+      />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Select, MenuItem, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
+import { Box, Typography, Button, Select, MenuItem, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, TextField } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -174,8 +174,27 @@ const ServiceAreas = () => {
 
       {/* Pagination */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
-        <Typography variant="body2">1-10 of {serviceAreas.length}</Typography>
-        <Pagination count={10} page={page} onChange={(e, newPage) => setPage(newPage)} color="primary" />
+      <Typography variant="body2">1-10 of 559</Typography>
+          <Pagination
+            count={10}
+            page={page}
+            onChange={(e, newPage) => setPage(newPage)}
+            color="primary"
+            showFirstButton
+            showLastButton
+          />
+          <TextField
+            variant="outlined"
+            size="small"
+            placeholder="Rows per page"
+            className="rows-per-page"
+          />
+          <TextField
+            variant="outlined"
+            size="small"
+            placeholder="Jump to"
+            className="jump-to-page"
+          />
       </Box>
 
       <AddServiceAreaModal open={isModalOpen} onClose={handleCloseModal} onSave={handleSaveServiceArea} />

@@ -1,4 +1,3 @@
-/* Center the login container */
 .login-container {
   display: flex;
   flex-direction: column;
@@ -19,7 +18,7 @@
   width: 70%;
   max-width: 400px;
   text-align: center;
-  margin-bottom: 20px; /* Add space between card and footer */
+  margin-bottom: 20px;
 }
 
 .logo-section {
@@ -112,8 +111,8 @@ input {
 }
 
 .checkbox-container label {
-  margin-left: 5px; /* Space between checkbox and label text */
-  white-space: nowrap; /* Prevent text wrapping */
+  margin-left: 5px;
+  white-space: nowrap;
 }
 
 .options .checkbox-container {
@@ -181,7 +180,7 @@ footer {
 }
 
 .forgot-password:hover {
-  background-color: lightgreen; /* Darker color on hover */
+  background-color: lightgreen;
   text-decoration: underline;
 }
 
