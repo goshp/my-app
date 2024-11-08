@@ -22,27 +22,24 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
     let filteredItems = [...data];
 
     // Sort items if a sort option is selected
-    if (sortOption === "A-Z") {
-      filteredItems.sort((a, b) => a.item.localeCompare(b.item));
-    } else if (sortOption === "Z-A") {
-      filteredItems.sort((a, b) => b.item.localeCompare(a.item));
+    if (sortOption !== "Default") {
+      filteredItems.sort((a, b) =>
+        sortOption === "A-Z" ? a.item.localeCompare(b.item) : b.item.localeCompare(a.item)
+      );
     }
 
     // Apply Brand Filter
-    if (brandFilter) {
-      filteredItems = filteredItems.filter((item) => item.brand === brandFilter);
-    }
+    if (brandFilter) filteredItems = filteredItems.filter((item) => 
+      item.brand === brandFilter);
 
     // Apply Dimension Filter
-    if (dimensionFilter) {
-      filteredItems = filteredItems.filter((item) => item.dims === dimensionFilter);
-    }
+    if (dimensionFilter) filteredItems = filteredItems.filter((item) => 
+      item.dims === dimensionFilter);
 
     // Apply Part Filter
-    if (partFilter) {
-      filteredItems = filteredItems.filter((item) => item.parts.includes(partFilter));
-    }
-
+    if (partFilter) filteredItems = filteredItems.filter((item) =>
+      Array.isArray(item.parts) && item.parts.includes(partFilter)
+    );
     // Apply Search Filter
     if (searchText) {
       const lowerSearchText = searchText.toLowerCase();
@@ -50,7 +47,9 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
         item.item.toLowerCase().includes(lowerSearchText) ||
         item.brand.toLowerCase().includes(lowerSearchText) ||
         item.dims.toLowerCase().includes(lowerSearchText) ||
-        item.parts.toLowerCase().includes(lowerSearchText)
+        (Array.isArray(item.parts) && item.parts.some(part =>
+          typeof part === 'string' && part.toLowerCase().includes(lowerSearchText)
+        ))
       );
     }
 
@@ -61,15 +60,19 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
     applyFilters();
   }, [applyFilters]);
 
-  const handleSortChange = (event) => {
-    setSortOption(event.target.value);
-  };
-
+  const handleSortChange = (event) => setSortOption(event.target.value);
   const handleStatusChange = (index, newStatus) => {
     const updatedStatuses = [...statuses];
     updatedStatuses[index] = newStatus;
     setStatuses(updatedStatuses);
   };
+
+  const handleSearchChange = (e) => setSearchText(e.target.value);
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => applyFilters(), 300);
+    return () => clearTimeout(delayDebounce);
+  }, [searchText, applyFilters]);
 
   return (
     <TableContainer component={Paper} className="table-container">
@@ -84,17 +87,18 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
         {showFilters && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <FormControl variant="outlined" size="small">
-                <Select
-                  value={sortOption}
-                  onChange={handleSortChange}
-                  displayEmpty
-                >
-                  <MenuItem value="Default">Sort by: Default</MenuItem>
-                  <MenuItem value="A-Z">A - Z</MenuItem>
-                  <MenuItem value="Z-A">Z - A</MenuItem>
-                </Select>
-              </FormControl>
+            <FormControl variant="outlined" size="small" data-testid="sort-select">
+              <Select
+                value={sortOption}
+                onChange={handleSortChange}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Sort options' }}
+              >
+                <MenuItem value="Default">Sort by: Default</MenuItem>
+                <MenuItem value="A-Z">A - Z</MenuItem>
+                <MenuItem value="Z-A">Z - A</MenuItem>
+              </Select>
+            </FormControl>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -103,6 +107,7 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
                   value={brandFilter}
                   onChange={(e) => setBrandFilter(e.target.value)}
                   displayEmpty
+                  inputProps={{ 'aria-label': 'Brand filter' }}
                 >
                   <MenuItem value="">Select Brand</MenuItem>
                   <MenuItem value="Apple">Apple</MenuItem>
@@ -115,6 +120,7 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
                   value={dimensionFilter}
                   onChange={(e) => setDimensionFilter(e.target.value)}
                   displayEmpty
+                  inputProps={{ 'aria-label': 'Dimensions filter' }}
                 >
                   <MenuItem value="">Dimensions</MenuItem>
                   <MenuItem value="12 oz PET">12 oz PET</MenuItem>
@@ -126,6 +132,7 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
                   value={partFilter}
                   onChange={(e) => setPartFilter(e.target.value)}
                   displayEmpty
+                  inputProps={{ 'aria-label': 'Parts filter' }}
                 >
                   <MenuItem value="">Parts</MenuItem>
                   <MenuItem value="Label">Label</MenuItem>
@@ -138,7 +145,7 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
                 size="small"
                 placeholder="Search"
                 value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
+                onChange={handleSearchChange}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -169,39 +176,49 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredData.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell><img src="battery-icon.png" alt={row.item} style={{ width: 40 }} /></TableCell>
-              <TableCell>{row.item}</TableCell>
-              <TableCell>
-                <StatusDropdown
-                  status={statuses[index]}
-                  setStatus={(newStatus) => handleStatusChange(index, newStatus)}
-                />
-              </TableCell>
-              <TableCell>{row.brand}</TableCell>
-              <TableCell>{row.dims}</TableCell>
-              <TableCell>{row.parts}</TableCell>
-              <TableCell>
-                <div className="rewards-container">
-                  <div className="reward-item">
-                    <span className="reward-number">1</span>
-                    <img src={badge1} alt="Silver Badge" className="reward-icon" />
+          {filteredData.length ? (
+            filteredData.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell><img src="battery-icon.png" alt={row.item} style={{ width: 40 }} /></TableCell>
+                <TableCell>{row.item}</TableCell>
+                <TableCell>
+                  <StatusDropdown
+                    status={statuses[index]}
+                    setStatus={(newStatus) => handleStatusChange(index, newStatus)}
+                  />
+                </TableCell>
+                <TableCell>{row.brand}</TableCell>
+                <TableCell>{row.dims}</TableCell>
+                <TableCell>{row.parts}</TableCell>
+                <TableCell>
+                  <div className="rewards-container">
+                    <div className="reward-item">
+                      <span className="reward-number">1</span>
+                      <img src={badge1} alt="Silver Badge" className="reward-icon" />
+                    </div>
+                    <div className="reward-item">
+                      <span className="reward-number">10</span>
+                      <img src={badge2} alt="Green Badge" className="reward-icon" />
+                    </div>
                   </div>
-                  <div className="reward-item">
-                    <span className="reward-number">10</span>
-                    <img src={badge2} alt="Green Badge" className="reward-icon" />
-                  </div>
-                </div>
-              </TableCell>
+                </TableCell>
 
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.location}</TableCell>
-              <TableCell>
-                <IconButton onClick={() => onEdit(row)}><EditIcon /></IconButton>
+                <TableCell>{row.date}</TableCell>
+                <TableCell>{row.location}</TableCell>
+                <TableCell>
+                  <IconButton onClick={() => onEdit(row)} data-testid="edit-button">
+                    <EditIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={10} align="center">
+                No items match your filters.
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </TableContainer>

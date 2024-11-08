@@ -1,58 +1,68 @@
-// App.test.js
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import App from './App';
-import LoginPage from './pages/LoginPage';
-import ScannedItemsPage from './pages/ScannedItemsPage';
+import { MemoryRouter } from 'react-router-dom';
+import LoginPage from './pages/LoginPage'; // Adjust path as needed
+import { useNavigate } from 'react-router-dom';
 
-describe('App Component', () => {
-  test('renders LoginPage at default route', () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <App />
-      </MemoryRouter>
-    );
-    expect(screen.getByText(/Welcome back/i)).toBeInTheDocument();
+// Mock the useNavigate hook
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
+}));
+
+describe('LoginPage Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); // Clear mocks between tests
   });
 
-  test('navigates to ScannedItemsPage when logged in', () => {
-    // Mock authentication
-    localStorage.setItem('authToken', 'valid-token'); // Assuming token determines authentication
+  test('logs in as Admin and navigates to /scanned-items on success', () => {
     render(
-      <MemoryRouter initialEntries={['/scanned-items']}>
-        <App />
+      <MemoryRouter>
+        <LoginPage />
       </MemoryRouter>
     );
-    expect(screen.getByText('Scanned Items')).toBeInTheDocument();
+
+    // Simulate login as Admin
+    fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'gosikhena@gmail.com' } });
+    fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'Peniel2015$' } });
+    fireEvent.click(screen.getByText('Log in'));
+
+    // Check if navigate was called with '/scanned-items'
+    expect(mockNavigate).toHaveBeenCalledWith('/scanned-items');
   });
 
-  test('redirects to LoginPage for protected route without authentication', () => {
-    localStorage.removeItem('authToken'); // Clear token for unauthenticated test
+  test('logs in as Employee and navigates to /scanned-items on success', () => {
     render(
-      <MemoryRouter initialEntries={['/scanned-items']}>
-        <App />
+      <MemoryRouter>
+        <LoginPage />
       </MemoryRouter>
     );
-    expect(screen.getByText(/Welcome back/i)).toBeInTheDocument();
+
+    // Switch to Employee and simulate login
+    fireEvent.click(screen.getByText('Employee'));
+    fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'employee@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'Employee2023$' } });
+    fireEvent.click(screen.getByText('Log in'));
+
+    // Check if navigate was called with '/scanned-items'
+    expect(mockNavigate).toHaveBeenCalledWith('/scanned-items');
   });
 
-  test('navigates between pages using links', () => {
+  test('shows alert on incorrect login credentials', () => {
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
+
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/scanned-items" element={<ScannedItemsPage />} />
-        </Routes>
+      <MemoryRouter>
+        <LoginPage />
       </MemoryRouter>
     );
 
-    // Simulate successful login (or direct navigation)
-    const loginButton = screen.getByText('Log in');
-    fireEvent.click(loginButton);
+    fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'wrong@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'wrongpassword' } });
+    fireEvent.click(screen.getByText('Log in'));
 
-    // Assuming navigation is successful after clicking log in
-    expect(screen.getByText('Scanned Items')).toBeInTheDocument();
+    expect(window.alert).toHaveBeenCalledWith('Incorrect email or password');
   });
 });
