@@ -142,7 +142,7 @@ const ItemCategories = () => {
       </TableContainer>
 
       <Box display="flex" justifyContent="space-between" alignItems="center" mt={3}>
-        <Typography variant="body2">1-10 of 559</Typography>
+        <Typography variant="body2">1-5 of 10</Typography>
         <Pagination
           count={10}
           page={page}

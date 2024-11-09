@@ -8,7 +8,6 @@ import ServAreaHeader from '../components/ServAreaHeader';
 import AddServiceAreaModal from '../components/AddServiceAreaModal';
 import './ServiceAreas.css';
 
-// Import images
 import oshawaLogo from '../assets/oshawa_Logo.png';
 import ajaxLogo from '../assets/logo-ajax-png-1.png';
 import scugogLogo from '../assets/Township-of-Scugog-Logo.png';
@@ -28,8 +27,7 @@ const ServiceAreas = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   // Sorting handler
-  const handleSortChange = (event) => {
-    const sortValue = event.target.value;
+  const handleSortChange = (sortValue) => {
     setSortOption(sortValue);
     let sortedData;
 
@@ -106,23 +104,30 @@ const ServiceAreas = () => {
         </Box>
       </Box>
 
-      {/* Sort Control Options */}
-      <Box display="flex" alignItems="center" gap={2} mt={2} mb={2} className="sort-controls">
+      {/* Filter Dropdown with Sort Options */}
+      <Box display="flex" alignItems="center" gap={2} mt={2} mb={2} className="filter-sort-controls">
+        {/* Dropdown for Sorting and Filter */}
         <Select
           value={sortOption}
-          onChange={handleSortChange}
+          onChange={(e) => handleSortChange(e.target.value)}
           displayEmpty
           variant="outlined"
           size="small"
+          style={{ minWidth: 150 }}
         >
-          <MenuItem value="Default">Sort by: Default</MenuItem>
-          <MenuItem value="A-Z">A - Z</MenuItem>
-          <MenuItem value="Z-A">Z - A</MenuItem>
+          <MenuItem value="Default">Show: All Products</MenuItem>
+          <MenuItem value="A-Z">Sort by: A - Z</MenuItem>
+          <MenuItem value="Z-A">Sort by: Z - A</MenuItem>
         </Select>
-        
-        <Box display="flex" gap={1} ml={1} className="sort-direction">
-          <Typography variant="body2" color="textSecondary">A - Z</Typography>
-          <Typography variant="body2" color="textSecondary">Z - A</Typography>
+
+        {/* Vertical Sorting Options */}
+        <Box display="flex" flexDirection="column" ml={2}>
+          <Typography>
+            A - Z
+          </Typography>
+          <Typography>
+            Z - A
+          </Typography>
         </Box>
       </Box>
 
@@ -174,27 +179,27 @@ const ServiceAreas = () => {
 
       {/* Pagination */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
-      <Typography variant="body2">1-10 of 559</Typography>
-          <Pagination
-            count={10}
-            page={page}
-            onChange={(e, newPage) => setPage(newPage)}
-            color="primary"
-            showFirstButton
-            showLastButton
-          />
-          <TextField
-            variant="outlined"
-            size="small"
-            placeholder="Rows per page"
-            className="rows-per-page"
-          />
-          <TextField
-            variant="outlined"
-            size="small"
-            placeholder="Jump to"
-            className="jump-to-page"
-          />
+        <Typography variant="body2">1-10 of 559</Typography>
+        <Pagination
+          count={10}
+          page={page}
+          onChange={(e, newPage) => setPage(newPage)}
+          color="primary"
+          showFirstButton
+          showLastButton
+        />
+        <TextField
+          variant="outlined"
+          size="small"
+          placeholder="Rows per page"
+          className="rows-per-page"
+        />
+        <TextField
+          variant="outlined"
+          size="small"
+          placeholder="Jump to"
+          className="jump-to-page"
+        />
       </Box>
 
       <AddServiceAreaModal open={isModalOpen} onClose={handleCloseModal} onSave={handleSaveServiceArea} />
