@@ -13,7 +13,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div>
+    <div style={{ paddingTop: '80px' }}>
       <ProfileHeader />
 
       {/* Personal Info Section */}

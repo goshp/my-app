@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, FormControl, Select, MenuItem, TextField, InputAdornment
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, FormControl, Select, MenuItem, TextField, InputAdornment, Typography, Box
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import SearchIcon from '@mui/icons-material/Search';
@@ -40,6 +40,7 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
     if (partFilter) filteredItems = filteredItems.filter((item) =>
       Array.isArray(item.parts) && item.parts.includes(partFilter)
     );
+
     // Apply Search Filter
     if (searchText) {
       const lowerSearchText = searchText.toLowerCase();
@@ -86,20 +87,34 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
         {/* Filters and Sort - Display only if showFilters is true */}
         {showFilters && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <FormControl variant="outlined" size="small" data-testid="sort-select">
-              <Select
-                value={sortOption}
-                onChange={handleSortChange}
-                displayEmpty
-                inputProps={{ 'aria-label': 'Sort options' }}
+            <Box position="relative" display="flex" alignItems="center">
+              <FormControl variant="outlined" size="small" data-testid="sort-select">
+                <Select
+                  value={sortOption}
+                  onChange={handleSortChange}
+                  displayEmpty
+                  inputProps={{ 'aria-label': 'Sort options' }}
+                >
+                  <MenuItem value="Default">Sort by: Default</MenuItem>
+                  <MenuItem value="A-Z">A - Z</MenuItem>
+                  <MenuItem value="Z-A">Z - A</MenuItem>
+                </Select>
+              </FormControl>
+              
+              {/* A-Z | Z-A Text with Overlapping Effect */}
+              <Typography
+                variant="body2"
+                style={{
+                  color: '#888',
+                  position: 'absolute',
+                  right: '-40px', // adjust position to create overlap effect
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                }}
               >
-                <MenuItem value="Default">Sort by: Default</MenuItem>
-                <MenuItem value="A-Z">A - Z</MenuItem>
-                <MenuItem value="Z-A">Z - A</MenuItem>
-              </Select>
-            </FormControl>
-            </div>
+                A - Z <br /> Z - A
+              </Typography>
+            </Box>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <FormControl variant="outlined" size="small">
@@ -172,14 +187,16 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
             <TableCell>Rewards</TableCell>
             <TableCell>Date/Time</TableCell>
             <TableCell>Location</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {filteredData.length ? (
             filteredData.map((row, index) => (
               <TableRow key={index}>
-                <TableCell><img src="battery-icon.png" alt={row.item} style={{ width: 40 }} /></TableCell>
+                <TableCell>
+                  <img src={row.image} alt={row.item} style={{ width: 40, height: 40 }} />
+                </TableCell>
                 <TableCell>{row.item}</TableCell>
                 <TableCell>
                   <StatusDropdown

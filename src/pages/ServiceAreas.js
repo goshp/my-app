@@ -23,8 +23,12 @@ const initialServiceAreasData = [
 const ServiceAreas = () => {
   const [sortOption, setSortOption] = useState("Default");
   const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Default rows per page
+  const [jumpToPage, setJumpToPage] = useState(''); // Jump to page input
   const [serviceAreas, setServiceAreas] = useState(initialServiceAreasData);
   const [isModalOpen, setModalOpen] = useState(false);
+
+  const filteredBinsData = serviceAreas; // Placeholder for filtered data, can modify this as needed
 
   // Sorting handler
   const handleSortChange = (sortValue) => {
@@ -76,37 +80,55 @@ const ServiceAreas = () => {
     setServiceAreas((prev) => prev.filter((area) => area.id !== id));
   };
 
+  // Pagination handlers
+  const handleRowsPerPageChange = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(1); // Reset to the first page
+  };
+
+  const handleJumpToPageChange = (event) => {
+    setJumpToPage(event.target.value);
+  };
+
+  const handleJumpToPageSubmit = () => {
+    const pageNumber = parseInt(jumpToPage, 10);
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(filteredBinsData.length / rowsPerPage)) {
+      setPage(pageNumber);
+    }
+    setJumpToPage(''); // Clear the input
+  };
+
   return (
     <Box className="service-areas-page">
       <ServAreaHeader />
 
-      {/* Title and Subtitle */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+      {/* Title and Action Buttons */}
+      <Box display="flex" justifyContent="space-between" alignItems="center" className="service-areas-header">
         <Box>
-          <Typography variant="h5" component="h1" className="service-area-title">Service Area</Typography>
+          <Typography variant="h5" component="h1" className="service-area-title">
+            Service Area
+          </Typography>
           <Typography variant="body2" color="textSecondary" className="service-area-subtitle">
             See all of your Service Area here.
           </Typography>
         </Box>
 
-        <Box display="flex" gap={2}>
-          <input
-            accept=".xlsx, .xls"
-            type="file"
-            id="upload-excel"
-            style={{ display: 'none' }}
-          />
+        <Box display="flex" gap={2} className="action-buttons">
+          <input accept=".xlsx, .xls" type="file" id="upload-excel" style={{ display: 'none' }} />
           <label htmlFor="upload-excel">
-            <Button variant="outlined" color="primary" component="span">Add by Excel</Button>
+            <Button variant="outlined" className="excel-button" color="primary" component="span">
+              Add by Excel
+            </Button>
           </label>
 
-          <Button variant="contained" color="success" startIcon={<AddIcon />} onClick={handleOpenModal}>Add New</Button>
+          <Button variant="contained" className="add-new-button" startIcon={<AddIcon />} onClick={handleOpenModal}>
+            Add New
+          </Button>
         </Box>
       </Box>
 
-      {/* Filter Dropdown with Sort Options */}
-      <Box display="flex" alignItems="center" gap={2} mt={2} mb={2} className="filter-sort-controls">
-        {/* Dropdown for Sorting and Filter */}
+      {/* Filter and Sort Controls */}
+      <Box display="flex" alignItems="center" gap={2} mt={2} mb={2} className="sort-controls">
         <Select
           value={sortOption}
           onChange={(e) => handleSortChange(e.target.value)}
@@ -120,14 +142,9 @@ const ServiceAreas = () => {
           <MenuItem value="Z-A">Sort by: Z - A</MenuItem>
         </Select>
 
-        {/* Vertical Sorting Options */}
         <Box display="flex" flexDirection="column" ml={2}>
-          <Typography>
-            A - Z
-          </Typography>
-          <Typography>
-            Z - A
-          </Typography>
+          <Typography>A - Z</Typography>
+          <Typography>Z - A</Typography>
         </Box>
       </Box>
 
@@ -142,11 +159,11 @@ const ServiceAreas = () => {
               <TableCell>Pickup Day</TableCell>
               <TableCell>Pickup Time</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {serviceAreas.map((area) => (
+            {filteredBinsData.slice((page - 1) * rowsPerPage, page * rowsPerPage).map((area) => (
               <TableRow key={area.id}>
                 <TableCell>{area.name}</TableCell>
                 <TableCell><img src={area.image} alt={area.name} width={40} height={40} /></TableCell>
@@ -178,28 +195,39 @@ const ServiceAreas = () => {
       </TableContainer>
 
       {/* Pagination */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
-        <Typography variant="body2">1-10 of 559</Typography>
-        <Pagination
-          count={10}
-          page={page}
-          onChange={(e, newPage) => setPage(newPage)}
-          color="primary"
-          showFirstButton
-          showLastButton
-        />
-        <TextField
-          variant="outlined"
-          size="small"
-          placeholder="Rows per page"
-          className="rows-per-page"
-        />
-        <TextField
-          variant="outlined"
-          size="small"
-          placeholder="Jump to"
-          className="jump-to-page"
-        />
+      <Box display="flex" justifyContent="space-between" alignItems="center" className="bins-pagination">
+        <Typography variant="body2">1-10 of {filteredBinsData.length}</Typography>
+        <Pagination count={10} 
+        page={page} onChange={(e, newPage) => setPage(newPage)} color="primary" 
+        showFirstButton showLastButton />
+
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography variant="body2">Rows per page:</Typography>
+          <Select
+            value={rowsPerPage}
+            onChange={handleRowsPerPageChange}
+            variant="outlined"
+            size="small"
+            className="rows-per-page"
+          >
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+          </Select>
+        </Box>
+
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography variant="body2">Jump to:</Typography>
+          <TextField
+            variant="outlined"
+            size="small"
+            value={jumpToPage}
+            onChange={handleJumpToPageChange}
+            onBlur={handleJumpToPageSubmit}
+            className="jump-to-page"
+            placeholder="Page"
+          />
+        </Box>
       </Box>
 
       <AddServiceAreaModal open={isModalOpen} onClose={handleCloseModal} onSave={handleSaveServiceArea} />

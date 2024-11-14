@@ -50,10 +50,10 @@ const ItemCatHeader = () => {
           <img src={badgeGreen} alt="Green Badge" className= "ItemCatblink" />
           <span>2,515</span>
         </div>
-      </Box>
-
+        
       {/* Profile Icon */}
       <img src={profileIcon} alt="Profile" className="profile-icon" />
+      </Box>
     </Box>
   );
 };

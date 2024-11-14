@@ -4,6 +4,7 @@ import {
   Button, TextField, Typography, IconButton, MenuItem,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import './EditItemModal.css';
 
 const EditItemModal = ({ open, onClose, itemData = {}, onSave }) => {
@@ -45,7 +46,7 @@ const EditItemModal = ({ open, onClose, itemData = {}, onSave }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>
         Edit Item
         <IconButton
@@ -62,77 +63,50 @@ const EditItemModal = ({ open, onClose, itemData = {}, onSave }) => {
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>
-        <Box component="form" className="item-edit-form" noValidate autoComplete="off">
-          <Box display="flex" gap={2} flexWrap="wrap">
-            <Box flexBasis="48%">
-              <TextField
-                label="Item Category"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                select
-                fullWidth
-              >
-                <MenuItem value="Paper">Paper</MenuItem>
-                <MenuItem value="Plastic">Plastic</MenuItem>
-              </TextField>
-            </Box>
-            <Box flexBasis="48%">
-              <TextField
-                label="Brand Name"
-                name="brandName"
-                value={formData.brandName}
-                onChange={(e) => setFormData({ ...formData, brandName: e.target.value })}
-                fullWidth
-              />
-            </Box>
+        <Box display="flex" gap={3} className="item-edit-form">
+          {/* Left Column */}
+          <Box flex={1} display="flex" flexDirection="column" gap={2}>
+            <TextField
+              label="Item Category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              select
+              fullWidth
+            >
+              <MenuItem value="Paper">Paper</MenuItem>
+              <MenuItem value="Plastic">Plastic</MenuItem>
+            </TextField>
 
-            <Box flexBasis="48%">
-              <TextField
-                label="Part"
-                name="part"
-                value={formData.part}
-                onChange={handleChange}
-                select
-                fullWidth
-              >
-                <MenuItem value="Label Part">Label Part</MenuItem>
-                <MenuItem value="Bottle Part">Bottle Part</MenuItem>
-              </TextField>
-            </Box>
-            <Box flexBasis="48%">
-              <TextField
-                label="Dimensions"
-                name="dimensions"
-                value={formData.dimensions}
-                onChange={handleChange}
-                select
-                fullWidth
-              >
-                <MenuItem value="12 oz PET">12 oz PET</MenuItem>
-                <MenuItem value="16 oz PET">16 oz PET</MenuItem>
-              </TextField>
-            </Box>
+            <TextField
+              label="Part"
+              name="part"
+              value={formData.part}
+              onChange={handleChange}
+              select
+              fullWidth
+            >
+              <MenuItem value="Label Part">Label Part</MenuItem>
+              <MenuItem value="Bottle Part">Bottle Part</MenuItem>
+            </TextField>
 
-            <Box flexBasis="48%">
-              <TextField
-                label="Approval Status"
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                select
-                fullWidth
-              >
-                <MenuItem value="Pending">Pending</MenuItem>
-                <MenuItem value="Approved">Approved</MenuItem>
-                <MenuItem value="Rejected">Rejected</MenuItem>
-              </TextField>
-            </Box>
+            <TextField
+              label="Approval Status"
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              select
+              fullWidth
+            >
+              <MenuItem value="Pending">Pending</MenuItem>
+              <MenuItem value="Approved">Approved</MenuItem>
+              <MenuItem value="Rejected">Rejected</MenuItem>
+            </TextField>
 
             {/* Upload Image Section */}
-            <Box flexBasis="48%" display="flex" flexDirection="column" alignItems="center" gap={1}>
+            <Box display="flex" flexDirection="column" alignItems="center" gap={1} mt={2}>
               {formData.file ? (
-                <Box display="flex" alignItems="center" gap={1} mt={2}>
+                <Box display="flex" alignItems="center" gap={1}>
                   <img
                     src={URL.createObjectURL(formData.file)}
                     alt="Uploaded"
@@ -146,17 +120,40 @@ const EditItemModal = ({ open, onClose, itemData = {}, onSave }) => {
                   </Box>
                 </Box>
               ) : (
-                <Button variant="outlined" component="label" className="upload-btn" fullWidth>
-                  Upload Image
+                <IconButton color="primary" component="label">
+                  <CloudUploadIcon fontSize="large" />
                   <input type="file" hidden onChange={handleFileChange} />
-                </Button>
+                </IconButton>
               )}
             </Box>
           </Box>
+
+          {/* Right Column */}
+          <Box flex={1} display="flex" flexDirection="column" gap={2}>
+            <TextField
+              label="Brand Name"
+              name="brandName"
+              value={formData.brandName}
+              onChange={handleChange}
+              fullWidth
+            />
+
+            <TextField
+              label="Dimensions"
+              name="dimensions"
+              value={formData.dimensions}
+              onChange={handleChange}
+              select
+              fullWidth
+            >
+              <MenuItem value="12 oz PET">12 oz PET</MenuItem>
+              <MenuItem value="16 oz PET">16 oz PET</MenuItem>
+            </TextField>
+          </Box>
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="secondary" className="cancel-btn">
+      <DialogActions sx={{ justifyContent: 'space-between' }}>
+        <Button onClick={onClose} color="secondary" variant="outlined" className="cancel-btn">
           Cancel
         </Button>
         <Button onClick={handleSave} color="success" variant="contained" className="save-btn">

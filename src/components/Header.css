@@ -2,21 +2,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 20px; /* Reduced top/bottom padding slightly */
+    padding: 8px 20px;
     background-color: #ffffff;
     border-bottom: 1px solid #ddd;
+    position: fixed;
     top: 0;
-    z-index: 1000;
-    position: fixed; /* Fixes the header to the top */
     left: 0;
     right: 0;
-}
-html, body {
-    margin: 0;
-    padding: 0;
+    z-index: 1000;
 }
 
-/* Logo Styling */
 .logo {
     height: 40px;
     margin-right: 10px;
@@ -25,7 +20,7 @@ html, body {
 /* Navigation Styling */
 .nav {
     display: flex;
-    gap: 10px; /* Reduced gap between nav items */
+    gap: 10px;
     font-size: 1em;
     font-weight: 600;
     color: #555;
@@ -34,12 +29,12 @@ html, body {
 .nav span {
     cursor: pointer;
     color: #555;
-    padding: 4px 10px; /* Adjusted padding for more compact appearance */
+    padding: 4px 10px;
     border-radius: 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav .active {
+.nav .active-link {
     color: #28a745;
     background-color: #e6f7ee;
     padding: 5px 15px;
@@ -51,32 +46,40 @@ html, body {
     background-color: #e6f7ee;
 }
 
-/* Badge and Profile Layout */
-.header-icons {
+/* Header Icons Styling */
+.header-icons-container {
     display: flex;
     align-items: center;
-    gap: 10px; /* Reduced gap between icons */
+    gap: 8px;
+    background-color: #f5f5f5;
+    padding: 4px 8px; /* Reduced padding to make the container more compact */
+    border-radius: 15px; /* Adjusted for a tighter look */
+    height: 32px; /* Reduced height */
 }
 
 .badge-container {
     display: flex;
     align-items: center;
-    gap: 4px; /* Reduced gap between badge and number */
+    gap: 4px;
 }
 
 .badge-icon {
-    width: 24px;
-    height: 24px;
+    width: 18px; /* Reduced width for badges */
+    height: 18px; /* Reduced height for badges */
 }
 
 .badge-number {
-    font-size: 0.85em;
+    font-size: 0.8em;
     color: #555;
 }
 
+.profile-icon-button {
+    padding: 0;
+}
+
 .profile-icon {
-    width: 40px;
-    height: 40px;
+    width: 20px; /* Reduced width for profile icon */
+    height: 20px; /* Reduced height for profile icon */
     border-radius: 50%;
     object-fit: cover;
 }

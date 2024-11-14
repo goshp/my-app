@@ -1,15 +1,30 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import companyLogo from '../assets/rcycle-combomarkremovebgpreview-1@2x.png';
-import badgeSilver from '../assets/image-910@2x.png';
-import badgeBlack from '../assets/image-911@2x.png';
-import badgeGreen from '../assets/image-912@2x.png';
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import recycleLogo from '../assets/rcycle-combomarkremovebgpreview-1@2x.png';
+import badgeIcon1 from '../assets/image-92@2x.png';
+import badgeIcon2 from '../assets/image-91@2x.png';
+import badgeIcon3 from '../assets/image-93@2x.png';
 import profileIcon from '../assets/avatar3@3x.png';
+import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import './ServAreaHeader.css';
 
 const ServAreaHeader = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+
+  const handleMenuClick = (option) => {
+    handleClose();
+    if (option === 'Profile') {
+      navigate('/profile');
+    } else if (option === 'Logout') {
+      localStorage.removeItem('authToken');
+      navigate('/', { replace: true });
+    }
+  };  
 
   const links = [
     { label: 'Scanned Items', path: '/scanned-items' },
@@ -20,44 +35,43 @@ const ServAreaHeader = () => {
   ];
 
   return (
-    <Box>
-      {/* Top Navigation Header */}
-      <Box className="serv-area-header">
-        <img src={companyLogo} alt="Company Logo" className="company-logo" />
+    <header className="header">
+      <img src={recycleLogo} alt="Recycle Logo" className="logo" />
+      <nav className="nav">
+        {links.map((link) => (
+          <Typography
+            key={link.label}
+            className={`nav-link ${location.pathname === link.path ? 'active-link' : ''}`}
+            onClick={() => navigate(link.path)}
+          >
+            {link.label}
+          </Typography>
+        ))}
+      </nav>
 
-        {/* Navigation Links */}
-        <Box className="nav-links">
-          {links.map((link) => (
-            <Typography
-              key={link.label}
-              className={`nav-link ${link.label === 'Service Areas' ? 'active-link' : ''}`}
-              onClick={() => navigate(link.path)}
-            >
-              {link.label}
-            </Typography>
-          ))}
-        </Box>
+      <div className="header-icons">
+        <div className="badge-container">
+          <img src={badgeIcon1} alt="Badge Icon 1" className="badge-icon scanblink" />
+          <span className="badge-number">99+</span>
+        </div>
+        <div className="badge-container">
+          <img src={badgeIcon2} alt="Badge Icon 2" className="badge-icon scanblink" />
+          <span className="badge-number">99+</span>
+        </div>
+        <div className="badge-container">
+          <img src={badgeIcon3} alt="Badge Icon 3" className="badge-icon scanblink" />
+          <span className="badge-number">99+</span>
+        </div>
 
-        {/* Badge Icons */}
-        <Box className="badge-icons">
-          <div className="badge">
-            <img src={badgeSilver} alt="Silver Badge" className="sblink" />
-            <span>332</span>
-          </div>
-          <div className="badge">
-            <img src={badgeBlack} alt="Black Badge" className="sblink" />
-            <span>493</span>
-          </div>
-          <div className="badge">
-            <img src={badgeGreen} alt="Green Badge" className="sblink" />
-            <span>2,515</span>
-          </div>
-        </Box>
-
-        {/* Profile Icon */}
-        <img src={profileIcon} alt="Profile" className="profile-icon" />
-      </Box>      
-    </Box>
+        <IconButton onClick={handleOpen}>
+          <img src={profileIcon} alt="Profile" className="profile-icon" />
+        </IconButton>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+          <MenuItem onClick={() => handleMenuClick('Profile')}>Profile</MenuItem>
+          <MenuItem onClick={() => handleMenuClick('Logout')}>Logout</MenuItem>
+        </Menu>
+      </div>
+    </header>
   );
 };
 

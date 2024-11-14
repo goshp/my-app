@@ -51,8 +51,16 @@
   font-weight: bold;
 }
 
-.search-field {
+.search-field,
+.add-new-btn {
   width: 200px;
+}
+
+.header-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
 }
 
 .table-container {
@@ -65,4 +73,5 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  margin-left: -5px; /* Adjusts the image alignment to the left */
 }

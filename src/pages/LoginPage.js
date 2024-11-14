@@ -13,7 +13,7 @@ function LoginPage() {
     e.preventDefault();
     const adminEmail = 'gosikhena@gmail.com';
     const adminPassword = 'Peniel2015$';
-    const employeeEmail = 'employee@example.com';
+    const employeeEmail = 'goshp4christ@gmail.com';
     const employeePassword = 'Employee2023$';
 
     if (

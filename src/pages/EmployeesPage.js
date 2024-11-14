@@ -22,20 +22,18 @@ const initialEmployeesData = [
 const EmployeesPage = () => {
   const [employees, setEmployees] = useState(initialEmployeesData);
   const [searchText, setSearchText] = useState("");
-  const [sortOrder, setSortOrder] = useState(""); // State for sorting order
+  const [sortOrder, setSortOrder] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // Handle sorting change
   const handleSortChange = (event) => {
     const order = event.target.value;
     setSortOrder(order);
     sortEmployees(order);
   };
 
-  // Function to sort employees
   const sortEmployees = (order) => {
     const sortedEmployees = [...employees].sort((a, b) => {
-      const key = 'firstName'; // Change to "username" or "email" for other fields
+      const key = 'firstName';
       if (order === "A-Z") {
         return a[key].localeCompare(b[key]);
       } else if (order === "Z-A") {
@@ -77,7 +75,6 @@ const EmployeesPage = () => {
     setEmployees((prevEmployees) => prevEmployees.filter(employee => employee.id !== id));
   };
 
-  // Filter employees based on search input
   const filteredEmployees = employees.filter(
     (employee) =>
       employee.firstName.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -90,55 +87,61 @@ const EmployeesPage = () => {
     <div className="employees-page">
       <Header activePage="Employees" />
 
-      <div className="employees-header">
-        <div className="header-title">
-          <h2>Employee Data</h2>
-          <p>See all of your employee details here.</p>
-          <FormControl variant="outlined" size="small" className="filter-select">
-            <Select displayEmpty value={sortOrder} onChange={handleSortChange}>
-              <MenuItem value="">Show: Default Order</MenuItem>
-              <MenuItem value="A-Z">A - Z</MenuItem>
-              <MenuItem value="Z-A">Z - A</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-
-        <div className="header-controls">
-          <Button variant="contained" className="add-new-btn" onClick={handleOpenModal}>
-            + Add New
-          </Button>
-          <TextField
-            variant="outlined"
-            size="small"
-            placeholder="Search"
-            value={searchText}
-            onChange={handleSearchChange}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  {searchText && (
-                    <IconButton onClick={handleClearSearch} edge="end">
-                      <ClearIcon />
-                    </IconButton>
-                  )}
-                </InputAdornment>
-              ),
-            }}
-            className="search-field"
-          />
-        </div>
-      </div>
-
       <TableContainer component={Paper} className="table-container">
         <Table>
           <TableHead>
+            {/* First row with header controls inside the table */}
+            <TableRow>
+              <TableCell colSpan={6}>
+                <div className="employees-header">
+                  <div className="header-title">
+                    <h2>Employee Data</h2>
+                    <p>See all of your employee details here.</p>
+                    <FormControl variant="outlined" size="small" className="filter-select">
+                      <Select displayEmpty value={sortOrder} onChange={handleSortChange}>
+                        <MenuItem value="">Show: Default Order</MenuItem>
+                        <MenuItem value="A-Z">A - Z</MenuItem>
+                        <MenuItem value="Z-A">Z - A</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+
+                  <div className="header-controls" >
+                    <Button variant="contained" className="add-new-btn" onClick={handleOpenModal}>
+                      + Add New
+                    </Button>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      placeholder="Search"
+                      value={searchText}
+                      onChange={handleSearchChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            {searchText && (
+                              <IconButton onClick={handleClearSearch} edge="end">
+                                <ClearIcon />
+                              </IconButton>
+                            )}
+                          </InputAdornment>
+                        ),
+                      }}
+                      className="search-field"
+                    />
+                  </div>
+                </div>
+              </TableCell>
+            </TableRow>
+
+            {/* Second row with column titles */}
             <TableRow>
               <TableCell>Image</TableCell>
               <TableCell>First Name</TableCell>
               <TableCell>Last Name</TableCell>
               <TableCell>User Name</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

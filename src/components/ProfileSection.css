@@ -1,46 +1,59 @@
-/* ProfileSection.css */
-
 .profile-section {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 24px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px; /* Ensures the sections don’t expand too wide on large screens */
-    margin-bottom: 24px;
-  }
-  
-  /* Title and subtitle styling */
-  .profile-section h5 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  
-  .profile-section p {
-    font-size: 0.875rem;
-    color: #6c757d;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 24px;
+  overflow: visible;
+}
+
+.profile-section h5 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  overflow: visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.profile-section p {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-bottom: 16px;
+}
+.profile-section {
+  overflow: visible;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.profile-section h5 {
+  overflow: visible;
+  white-space: nowrap;
+}
+
+
+/* Adjust flex layout if needed */
+.profile-section .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}  
+.profile-section .MuiTextField-root,
+.profile-section .MuiFormControl-root {
     margin-bottom: 16px;
-  }
-  
-  /* Form fields styling */
-  .profile-section .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-  }
-  
-  .profile-section .MuiTextField-root,
-  .profile-section .MuiFormControl-root {
-    margin-bottom: 16px;
-  }
+}
   
   /* Align the form fields in two columns on larger screens */
-  .profile-section form {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
+.profile-section form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
   
   @media (min-width: 600px) {
     .profile-section form {

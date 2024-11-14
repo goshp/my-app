@@ -32,7 +32,7 @@ const ProfileHeader = () => {
           <Typography
             key={link.label}
             className="nav-link"
-            onClick={() => navigate(link.path)} // Navigate to route on click
+            onClick={() => navigate(link.path)}
           >
             {link.label}
           </Typography>
@@ -46,11 +46,11 @@ const ProfileHeader = () => {
           <span>423</span>
         </div>
         <div className="badge">
-          <img src={badge2} alt="Gold Badge" className=" badgeblink" /> {/* Blinking effect here */}
+          <img src={badge2} alt="Gold Badge" className=" badgeblink" />
           <span>345</span>
         </div>
         <div className="badge">
-          <img src={badge1} alt="Green Badge" className="badgeblink" /> {/* Blinking effect here */}
+          <img src={badge1} alt="Green Badge" className="badgeblink" />
           <span>1,515</span>
         </div>
         <img src={profIcon} alt="Profile" className="prof-icon" />

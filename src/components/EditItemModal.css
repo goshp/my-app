@@ -1,15 +1,10 @@
 .item-edit-form {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    flex-direction: row;
+    gap: 24px;
 }
 
 .item-edit-form .MuiTextField-root {
-    width: 100%; /* Ensures each input takes full width of its container */
-}
-
-.item-edit-form .file-upload {
-    margin-top: 16px;
     width: 100%;
 }
 
@@ -34,10 +29,7 @@
     background-color: #28a745;
     color: white;
 }
+
 .save-btn:hover {
     background-color: #218838;
 }
-.item-edit-form .MuiTextField-root {
-    width: 100%;
-  }
-  

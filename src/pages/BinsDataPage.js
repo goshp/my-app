@@ -10,12 +10,15 @@ import BinsHeader from '../components/BinsHeader';
 import BinEditModal from '../components/BinEditModal';
 import './BinsDataPage.css';
 
+import CoffeeImage from '../assets/Coffe.jpg';
+import SuppliesImage from '../assets/supplies-stationery.png';
+
 const initialBinsData = [
   {
     id: 1,
     name: "Cafeteria Recycle",
-    image: "https://via.placeholder.com/40",
-    pickupTime: "12:00 PM",
+    image: CoffeeImage,
+    pickupTime: "10:30 AM",
     location: "Latitude: 43.941050718330... Longitude: -78.895894070...",
     status: "Active",
     collector: "Derick Williams",
@@ -24,7 +27,7 @@ const initialBinsData = [
   {
     id: 2,
     name: "Office Recycle",
-    image: "https://via.placeholder.com/40",
+    image: SuppliesImage,
     pickupTime: "09:30 AM",
     latitude: "44.941050718330",
     longitude: "-79.895894070",
@@ -35,7 +38,7 @@ const initialBinsData = [
   {
     id: 3,
     name: "Park Bin",
-    image: "https://via.placeholder.com/40",
+    image: CoffeeImage,
     pickupTime: "03:15 PM",
     latitude: "42.941050718330",
     longitude: "-77.895894070",
@@ -46,21 +49,22 @@ const initialBinsData = [
   {
     id: 4,
     name: "Library Recycle",
-    image: "https://via.placeholder.com/40",
+    image: SuppliesImage,
     pickupTime: "11:00 AM",
     latitude: "45.941050718330",
     longitude: "-80.895894070",
     status: "Inactive",
     collector: "Andres Hurley",
     schedule: "Monday, Friday",
-  },
+  },  
 ];
 
 const BinsDataPage = () => {
-  const [binsData, setBinsData] = useState(initialBinsData); // State to manage bin items
+  const [binsData, setBinsData] = useState(initialBinsData);
   const [filter, setFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [searchText, setSearchText] = useState('');
+  const [binNameFilter, setBinNameFilter] = useState('');
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [jumpToPage, setJumpToPage] = useState('');
@@ -68,8 +72,9 @@ const BinsDataPage = () => {
   const [selectedBin, setSelectedBin] = useState(null);
 
   const handleFilterChange = (e) => setFilter(e.target.value);
-  const handleStatusChange = (e) => setStatusFilter(e.target.value);
+  const handleStatusFilterChange = (e) => setStatusFilter(e.target.value);
   const handleSearchChange = (e) => setSearchText(e.target.value);
+  const handleBinNameChange = (e) => setBinNameFilter(e.target.value);
 
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -97,10 +102,34 @@ const BinsDataPage = () => {
     setSelectedBin(null);
   };
 
-  // Delete bin function
+  const handleStatusChange = (binId, newStatus) => {
+    setBinsData((prevData) =>
+      prevData.map((bin) =>
+        bin.id === binId ? { ...bin, status: newStatus } : bin
+      )
+    );
+  };
+
   const handleDeleteClick = (binId) => {
     setBinsData(binsData.filter(bin => bin.id !== binId));
   };
+
+  // Filter binsData based on bin name, status, and general search across multiple fields
+  const filteredBinsData = binsData.filter((bin) => {
+    const matchesBinName = bin.name.toLowerCase().includes(binNameFilter.toLowerCase());
+    const matchesStatus = statusFilter ? bin.status === statusFilter : true;
+    const matchesGeneralSearch = searchText.toLowerCase();
+
+    const matchesSearch = (
+      bin.name.toLowerCase().includes(matchesGeneralSearch) ||
+      bin.status.toLowerCase().includes(matchesGeneralSearch) ||
+      bin.collector.toLowerCase().includes(matchesGeneralSearch) ||
+      bin.schedule.toLowerCase().includes(matchesGeneralSearch) ||
+      (bin.location ? bin.location.toLowerCase().includes(matchesGeneralSearch) : false)
+    );
+
+    return matchesBinName && matchesStatus && matchesSearch;
+  });
 
   return (
     <Box className="bins-data-page">
@@ -137,18 +166,25 @@ const BinsDataPage = () => {
               size="small"
               placeholder="Bin Name"
               className="text-field"
+              value={binNameFilter}
+              onChange={handleBinNameChange}
             />
-            <Select
-              value={statusFilter}
-              onChange={handleStatusChange}
-              displayEmpty
-              variant="outlined"
-              className="status-filter"
-            >
-              <MenuItem value="">Select Status</MenuItem>
-              <MenuItem value="Active">Active</MenuItem>
-              <MenuItem value="Inactive">Inactive</MenuItem>
-            </Select>
+
+            {/* Status filter with dot indicator in front */}
+            <Box display="flex" alignItems="center" className="status-filter-container">
+              <Select
+                value={statusFilter}
+                onChange={handleStatusFilterChange}
+                displayEmpty
+                variant="outlined"
+                className="status-filter"
+              >
+                <MenuItem value="">Select Status</MenuItem>
+                <MenuItem value="Active">Active</MenuItem>
+                <MenuItem value="Inactive">Inactive</MenuItem>
+              </Select>
+            </Box>
+
             <TextField
               variant="outlined"
               size="small"
@@ -180,11 +216,11 @@ const BinsDataPage = () => {
                 <TableCell>Status</TableCell>
                 <TableCell>MRF Collector</TableCell>
                 <TableCell>Pickup Schedule</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {binsData.map((bin) => (
+              {filteredBinsData.map((bin) => (
                 <TableRow key={bin.id}>
                   <TableCell>{bin.name}</TableCell>
                   <TableCell>
@@ -196,7 +232,23 @@ const BinsDataPage = () => {
                       {bin.location || `Latitude: ${bin.latitude}... Longitude: ${bin.longitude}...`}
                     </div>
                   </TableCell>
-                  <TableCell>{bin.status}</TableCell>
+                  <TableCell>
+                    <Box display="flex" alignItems="center">
+                      {/* Status dropdown first, then the dot to the right */}
+                      <Select
+                        value={bin.status}
+                        onChange={(e) => handleStatusChange(bin.id, e.target.value)}
+                        displayEmpty
+                        variant="outlined"
+                        size="small"
+                        style={{ minWidth: 100 }}
+                      >
+                        <MenuItem value="Active">Active</MenuItem>
+                        <MenuItem value="Inactive">Inactive</MenuItem>
+                      </Select>
+                      <span className={`status-dot ${bin.status === 'Active' ? 'active-dot' : 'inactive-dot'}`}></span>
+                    </Box>
+                  </TableCell>
                   <TableCell>{bin.collector}</TableCell>
                   <TableCell>{bin.schedule}</TableCell>
                   <TableCell>
@@ -216,7 +268,7 @@ const BinsDataPage = () => {
         </TableContainer>
 
         <Box className="bins-pagination">
-          <Typography variant="body2">1-10 of {binsData.length}</Typography>
+          <Typography variant="body2">1-10 of {filteredBinsData.length}</Typography>
           <Pagination
             count={10}
             page={page}
@@ -235,9 +287,9 @@ const BinsDataPage = () => {
               size="small"
               className="rows-per-page"
             >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
               <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
             </Select>
           </Box>
 

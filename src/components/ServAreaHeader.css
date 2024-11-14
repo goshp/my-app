@@ -1,86 +1,96 @@
-/* Header Container */
-.serv-area-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
-  }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px; /* Reduced top/bottom padding slightly */
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  top: 0;
+  z-index: 1000;
+  position: fixed; /* Fixes the header to the top */
+  left: 0;
+  right: 0;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}
 
-  .company-logo {
-    height: 40px;
-    margin-right: 20px;
-  }
-  
-  /*navs*/
-  .nav-links {
-    display: flex;
-    gap: 20px;
-    flex-grow: 1;
-  }
-  
-  .nav-link {
-    color: #4a4a4a;
-    font-weight: 500;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-link:hover {
-    color: #333;
-  }
-  
-  /*link*/
-  .active-link {
-    background-color: #e3f6e8;
-    padding: 5px 10px;
-    border-radius: 8px;
-    color: #004c3f;
-  }
- 
-  /*badges*/
-  .badge-icons {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-right: 20px;
-  }
-  
-  .badge {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .blink {
-    height: 20px;
-    width: 20px;
-  }
-  
-  .badge span {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .profile-icon {
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-    cursor: pointer;
-  } 
+/* Logo Styling */
+.logo {
+  height: 40px;
+  margin-right: 10px;
+}
 
-  /*badge animation*/
-  @keyframes blink {
-    0%, 100% {
+/* Navigation Styling */
+.nav {
+  display: flex;
+  gap: 10px; /* Reduced gap between nav items */
+  font-size: 1em;
+  font-weight: 600;
+  color: #555;
+}
+
+.nav span {
+  cursor: pointer;
+  color: #555;
+  padding: 4px 10px; /* Adjusted padding for more compact appearance */
+  border-radius: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav .active {
+  color: #28a745;
+  background-color: #e6f7ee;
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+.nav span:hover {
+  color: #28a745;
+  background-color: #e6f7ee;
+}
+
+/* Badge and Profile Layout */
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Reduced gap between icons */
+}
+
+.badge-container {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Reduced gap between badge and number */
+}
+
+.badge-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.badge-number {
+  font-size: 0.85em;
+  color: #555;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Blinking Animation */
+@keyframes blink {
+  0%, 100% {
       opacity: 1;
-    }
-    50% {
-      opacity: 0.3;
-    }
   }
-  
-.sblink {
-    animation: blink 1.5s infinite;
+  50% {
+      opacity: 0.3;
+  }
+}
+
+.scanblink {
+  animation: blink 1.5s infinite;
 }
