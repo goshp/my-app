@@ -40,16 +40,26 @@
     flex-wrap: wrap;
 }
 
-/* Set a fixed height and consistent padding for both buttons */
 .excel-button,
 .add-new-button {
-    height: 40px; /* Set a minimum height */
-    padding: 8px 16px; /* Consistent padding */
-    font-size: 0.875rem; /* Ensure text size is the same */
+    padding: 8px 16px;
+    font-size: 0.875rem;
     line-height: 1;
     display: flex;
-    align-items: center; /* Center text vertically */
+    align-items: center;
 }
+.table-container .MuiTableCell-root {
+    padding: 8px 12px;
+    overflow: visible;
+}
+
+.table-container .MuiTableCell-root img {
+    display: block;
+    margin-left: 0;
+    max-width: 20;
+    height: auto;
+}
+
 
 .add-new-button {
     background-color: #02B74F !important;
@@ -62,13 +72,21 @@
     color: #333 !important; 
 }
 
+.table-container img {
+    margin-left: 10px;
+}
 
-/* Responsive Adjustments */
+.add-new-button {
+    background-color: #02B74F !important;
+    color: #ffffff !important;
+    border-color: #90ee90 !important;
+}
+
 @media (max-width: 768px) {
     .service-areas-header {
         flex-direction: column;
         align-items: flex-start;
-        min-height: auto; /* Adjust height for smaller screens */
+        min-height: auto; 
     }
 
     .service-area-title {
@@ -76,7 +94,7 @@
     }
 
     .action-buttons {
-        width: 100%; /* Allow buttons to take up full width on small screens */
+        width: 100%;
         justify-content: flex-start;
     }
 }

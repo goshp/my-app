@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Box, Typography, Select, MenuItem, Button, Table, TableBody,
   TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, TextField,
-  Tooltip
+  Tooltip, TableFooter,
 } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import AddIcon from '@mui/icons-material/Add';
@@ -42,16 +42,27 @@ const ItemCategories = () => {
   const [data, setData] = useState(initialData);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // New State Variables
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [jumpToPage, setJumpToPage] = useState("");
-  
-  const filteredBinsData = data;
 
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
-  const handleSortChange = (event) => setSortOption(event.target.value);
+  const handleSortChange = (event) => {
+    const value = event.target.value;
+    setSortOption(value);
+
+    let sortedData = [...data];
+    if (value === "A-Z") {
+      sortedData.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (value === "Z-A") {
+      sortedData.sort((a, b) => b.name.localeCompare(a.name));
+    } else {
+      sortedData = initialData; // Reset to initial unsorted data if "Default" is selected
+    }
+
+    setData(sortedData);
+  };
 
   const handleSaveNewItem = (newItem) => {
     setData(prevData => [
@@ -73,10 +84,9 @@ const ItemCategories = () => {
     setData(prevData => prevData.filter(item => item.id !== id));
   };
 
-  // New Handlers for Pagination Controls
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(1);  // Reset to first page when rows per page changes
+    setPage(1);
   };
 
   const handleJumpToPageChange = (event) => {
@@ -85,151 +95,154 @@ const ItemCategories = () => {
 
   const handleJumpToPageSubmit = () => {
     const pageNumber = parseInt(jumpToPage, 10);
-    if (!isNaN(pageNumber) && pageNumber > 0 && pageNumber <= Math.ceil(filteredBinsData.length / rowsPerPage)) {
+    if (!isNaN(pageNumber) && pageNumber > 0 && pageNumber <= Math.ceil(data.length / rowsPerPage)) {
       setPage(pageNumber);
     }
   };
 
   return (
-    <Box className="item-categories-page" p={3}>
+    <Box className="item-categories-page" p={8}>
       <ItemCatHeader />
+      
+      {/* Spacing Box */}
+      <Box mb={3} />
 
-      {/* Main Content Container */}
-      <Box className="content-container">
-        {/* Header Section Inside Container */}
-        <Box
-          display="flex"
-          flexWrap="wrap"
-          justifyContent="space-between"
-          alignItems="center"
-          mb={3}
-          style={{ minHeight: '50px' }}
-        >
-          <Box flex="1 1 auto" minWidth="200px" mb={1}>
-            <Typography variant="h5" component="h1" className="title">Item Categories</Typography>
-            <Typography variant="body2" color="textSecondary">See all of your retail deals here.</Typography>
-          </Box>
-          <Box>
-            <Button
-              variant="contained"
-              color="success"
-              startIcon={<AddIcon />}
-              onClick={handleOpenModal}
-              className="add-new-button"
-            >
-              Add New
-            </Button>
-          </Box>
-        </Box>
+      <TableContainer component={Paper} className="table-container">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell colSpan={7}>
+                {/* Header and Controls */}
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                  <Box>
+                    <Typography variant="h5" component="h1" className="title">Item Categories</Typography>
+                    <Typography variant="body2" color="textSecondary">See all of your retail deals here.</Typography>
+                  </Box>
+                  <Box>
+                    <Button
+                      variant="contained"
+                      color="success"
+                      startIcon={<AddIcon />}
+                      onClick={handleOpenModal}
+                      className="add-new-button"
+                    >
+                      Add New
+                    </Button>
+                  </Box>
+                </Box>
+                {/* Sort Dropdown */}
+                <Box display="flex" alignItems="center" gap={2} mt={2}>
+                  <Select
+                    value={sortOption}
+                    onChange={handleSortChange}
+                    displayEmpty
+                    variant="outlined"
+                    size="small"
+                    className="sort-select"
+                  >
+                    <MenuItem value="Default">Sort by: Default</MenuItem>
+                    <MenuItem value="A-Z">A - Z</MenuItem>
+                    <MenuItem value="Z-A">Z - A</MenuItem>
+                  </Select>
 
-        {/* Sorting Dropdown */}
-        <Box display="flex" alignItems="center" gap={2} mb={2}>
-          <Select
-            value={sortOption}
-            onChange={handleSortChange}
-            displayEmpty
-            variant="outlined"
-            size="small"
-            className="sort-select"
-          >
-            <MenuItem value="Default">Sort by: Default</MenuItem>
-            <MenuItem value="A-Z">A - Z</MenuItem>
-            <MenuItem value="Z-A">Z - A</MenuItem>
-          </Select>
-        </Box>
-
-        {/* Table Section */}
-        <TableContainer component={Paper} className="table-container">
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell style={{ width: "20%" }}>Category Name</TableCell>
-                <TableCell style={{ width: "15%" }}>Category Type</TableCell>
-                <TableCell style={{ width: "30%" }}>Description</TableCell>
-                <TableCell style={{ width: "15%" }}>Rewards</TableCell>
-                <TableCell style={{ width: "10%" }} className="image-cell">Image</TableCell>
-                <TableCell style={{ width: "10%" }}>Acceptance</TableCell>
-                <TableCell style={{ width: "10%" }}></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.type}</TableCell>
-                  <TableCell className="wrap-text description-cell">
-                    <Tooltip title={item.description} arrow>
-                      <span>{item.description}</span>
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell>
-                    <Box display="flex" gap={1} alignItems="center">
-                      <Box className="reward-badge-container">
-                        <span className="reward-number">{item.rewards.tokens}</span>
-                        <img src={badgeIcon1} alt="Token Badge" className="reward-badge" />
-                      </Box>
-                      <Box className="reward-badge-container">
-                        <span className="reward-number">{item.rewards.points}</span>
-                        <img src={badgeIcon2} alt="Point Badge" className="reward-badge" />
-                      </Box>
+                  <Box display="flex" flexDirection="column" ml={2}>
+                  <Typography>A - Z</Typography>
+                  <Typography>Z - A</Typography>
+                </Box>
+                </Box>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell style={{ width: "20%" }}>Category Name</TableCell>
+              <TableCell style={{ width: "15%" }}>Category Type</TableCell>
+              <TableCell style={{ width: "30%" }}>Description</TableCell>
+              <TableCell style={{ width: "15%" }}>Rewards</TableCell>
+              <TableCell style={{ width: "10%" }}>Image</TableCell>
+              <TableCell style={{ width: "10%" }}>Acceptance</TableCell>
+              <TableCell style={{ width: "10%" }}></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.type}</TableCell>
+                <TableCell className="wrap-text description-cell">
+                  <Tooltip title={item.description} arrow>
+                    <span>{item.description}</span>
+                  </Tooltip>
+                </TableCell>
+                <TableCell>
+                  <Box display="flex" gap={1} alignItems="center">
+                    <Box className="reward-badge-container">
+                      <span className="reward-number">{item.rewards.tokens}</span>
+                      <img src={badgeIcon1} alt="Token Badge" className="reward-badge" />
                     </Box>
-                  </TableCell>
-                  <TableCell className="image-cell">
-                    <img src={item.image} alt={item.name} />
-                  </TableCell>
-                  <TableCell>{item.acceptance}</TableCell>
-                  <TableCell>
-                    <IconButton color="error" onClick={() => handleDeleteItem(item.id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                    <Box className="reward-badge-container">
+                      <span className="reward-number">{item.rewards.points}</span>
+                      <img src={badgeIcon2} alt="Point Badge" className="reward-badge" />
+                    </Box>
+                  </Box>
+                </TableCell>
+                <TableCell className="image-cell">
+                  <img src={item.image} alt={item.name} />
+                </TableCell>
+                <TableCell>{item.acceptance}</TableCell>
+                <TableCell>
+                  <IconButton onClick={() => handleDeleteItem(item.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow className="pagination-row">
+              <TableCell colSpan={7}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" p={1}>
+                  <Typography variant="body2">1-10 of {data.length}</Typography>
+                  <Pagination
+                    count={10}
+                    page={page}
+                    onChange={(e, newPage) => setPage(newPage)}
+                    color="primary"
+                    showFirstButton
+                    showLastButton
+                  />
 
-        {/* Pagination Section */}
-        <Box className="bins-pagination">
-          <Typography variant="body2">1-10 of {filteredBinsData.length}</Typography>
-          <Pagination
-            count={10}
-            page={page}
-            onChange={(e, newPage) => setPage(newPage)}
-            color="primary"
-            showFirstButton
-            showLastButton
-          />
-          
-          <Box display="flex" alignItems="center" gap={1}>
-            <Typography variant="body2">Rows per page:</Typography>
-            <Select
-              value={rowsPerPage}
-              onChange={handleRowsPerPageChange}
-              variant="outlined"
-              size="small"
-              className="rows-per-page"
-            >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-            </Select>
-          </Box>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography variant="body2">Rows per page:</Typography>
+                    <Select
+                      value={rowsPerPage}
+                      onChange={handleRowsPerPageChange}
+                      variant="outlined"
+                      size="small"
+                      className="rows-per-page"
+                    >
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={10}>10</MenuItem>
+                    </Select>
+                  </Box>
 
-          <Box display="flex" alignItems="center" gap={1}>
-            <Typography variant="body2">Jump to:</Typography>
-            <TextField
-              variant="outlined"
-              size="small"
-              value={jumpToPage}
-              onChange={handleJumpToPageChange}
-              onBlur={handleJumpToPageSubmit}
-              className="jump-to-page"
-              placeholder="Page"
-            />
-          </Box>
-        </Box>
-      </Box>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography variant="body2">Jump to:</Typography>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      value={jumpToPage}
+                      onChange={handleJumpToPageChange}
+                      onBlur={handleJumpToPageSubmit}
+                      className="jump-to-page"
+                      placeholder="Page"
+                    />
+                  </Box>
+                </Box>
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
 
       <AddItemCatModal open={isModalOpen} onClose={handleCloseModal} onSave={handleSaveNewItem} />
     </Box>

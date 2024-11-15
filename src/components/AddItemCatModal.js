@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Box, Typography, Button, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { Modal, Box, Typography, Button, MenuItem, Select, FormControl } from '@mui/material';
 import './AddItemCatModal.css';
 
 const AddItemCatModal = ({ open, onClose, onSave }) => {
@@ -25,54 +25,62 @@ const AddItemCatModal = ({ open, onClose, onSave }) => {
                 <Typography variant="h6" className="modal-title">Select Acceptable Category</Typography>
                 
                 <Box className="modal-form">
-                    {/* Item Category - Half Width */}
-                    <FormControl variant="outlined" className="form-control-half">
-                        <InputLabel>Item Category</InputLabel>
-                        <Select
-                            name="itemCategory"
-                            value={formData.itemCategory}
-                            onChange={handleInputChange}
-                            label="Item Category"
-                        >
-                            <MenuItem value="Battery">Battery</MenuItem>
-                            <MenuItem value="Paper">Paper</MenuItem>
-                            <MenuItem value="Plastic">Plastic</MenuItem>
-                        </Select>
-                    </FormControl>
+                    <Box className="form-column">
+                        <Typography className="field-label">Item Category</Typography>
+                        <FormControl variant="outlined" fullWidth>
+                            <Select
+                                name="itemCategory"
+                                value={formData.itemCategory}
+                                onChange={handleInputChange}
+                            >
+                                <MenuItem value="Battery">Battery</MenuItem>
+                                <MenuItem value="Paper">Paper</MenuItem>
+                                <MenuItem value="Plastic">Plastic</MenuItem>
+                            </Select>
+                        </FormControl>
 
-                    {/* Active Status - Half Width */}
-                    <FormControl variant="outlined" className="form-control-half">
-                        <InputLabel>Active Status</InputLabel>
-                        <Select
-                            name="activeStatus"
-                            value={formData.activeStatus}
-                            onChange={handleInputChange}
-                            label="Active Status"
-                        >
-                            <MenuItem value="Active">Active</MenuItem>
-                            <MenuItem value="Inactive">Inactive</MenuItem>
-                        </Select>
-                    </FormControl>
+                        <Typography className="field-label">Category Type</Typography>
+                        <FormControl variant="outlined" fullWidth>
+                            <Select
+                                name="categoryType"
+                                value={formData.categoryType}
+                                onChange={handleInputChange}
+                            >
+                                <MenuItem value="Recyclable">Recyclable</MenuItem>
+                                <MenuItem value="Non-Recyclable">Non-Recyclable</MenuItem>
+                            </Select>
+                        </FormControl>
 
-                    {/* Category Type - Full Width */}
-                    <FormControl variant="outlined" className="form-control-full">
-                        <InputLabel>Category Type</InputLabel>
-                        <Select
-                            name="categoryType"
-                            value={formData.categoryType}
-                            onChange={handleInputChange}
-                            label="Category Type"
+                        <Button
+                            onClick={onClose}
+                            className="cancel-button"
                         >
-                            <MenuItem value="Recyclable">Recyclable</MenuItem>
-                            <MenuItem value="Non-Recyclable">Non-Recyclable</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Box>
+                            Cancel
+                        </Button>
+                    </Box>
 
-                {/* Footer with Cancel and Update Buttons */}
-                <Box className="modal-footer">
-                    <Button onClick={onClose} className="cancel-button">Cancel</Button>
-                    <Button onClick={handleSave} className="update-button">Update</Button>
+                    <Box className="form-column">
+                        <Typography className="field-label">Active Status</Typography>
+                        <FormControl variant="outlined" fullWidth>
+                            <Select
+                                name="activeStatus"
+                                value={formData.activeStatus}
+                                onChange={handleInputChange}
+                            >
+                                <MenuItem value="Active">Active</MenuItem>
+                                <MenuItem value="Inactive">Inactive</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <Box className="button-container">
+                            <Button
+                                onClick={handleSave}
+                                className="update-button"
+                            >
+                                Update
+                            </Button>
+                        </Box>
+                    </Box>
                 </Box>
             </Box>
         </Modal>

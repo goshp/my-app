@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Box, Typography, Select, MenuItem, TextField, InputAdornment,
   IconButton, Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, Paper, Pagination
+  TableHead, TableRow, Paper, Pagination, TableFooter
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -26,37 +26,25 @@ const initialBinsData = [
   },
   {
     id: 2,
-    name: "Office Recycle",
+    name: "Office Recycling",
     image: SuppliesImage,
-    pickupTime: "09:30 AM",
-    latitude: "44.941050718330",
-    longitude: "-79.895894070",
-    status: "Inactive",
-    collector: "Shirley Chan",
-    schedule: "Tuesday, Thursday",
+    pickupTime: "10:30 AM",
+    location: "Latitude: 43.941050718330... Longitude: -78.895894070...",
+    status: "Active",
+    collector: "William Harris",
+    schedule: "Monday, Tuesday, Wednesday",
   },
   {
     id: 3,
-    name: "Park Bin",
+    name: "Cafeteria Recycle",
     image: CoffeeImage,
-    pickupTime: "03:15 PM",
-    latitude: "42.941050718330",
-    longitude: "-77.895894070",
+    pickupTime: "10:30 AM",
+    location: "Latitude: 43.741050718330... Longitude: -78.895894070...",
     status: "Active",
-    collector: "Vivian Hickman",
-    schedule: "Daily",
+    collector: "Trooswell Davis",
+    schedule: "Monday, Tuesday, Wednesday",
   },
-  {
-    id: 4,
-    name: "Library Recycle",
-    image: SuppliesImage,
-    pickupTime: "11:00 AM",
-    latitude: "45.941050718330",
-    longitude: "-80.895894070",
-    status: "Inactive",
-    collector: "Andres Hurley",
-    schedule: "Monday, Friday",
-  },  
+  // Add more bin data as needed
 ];
 
 const BinsDataPage = () => {
@@ -71,7 +59,22 @@ const BinsDataPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedBin, setSelectedBin] = useState(null);
 
-  const handleFilterChange = (e) => setFilter(e.target.value);
+  const handleFilterChange = (e) => {
+    const sortOption = e.target.value;
+    setFilter(sortOption);
+
+    let sortedData = [...binsData];
+    if (sortOption === "A-Z") {
+      sortedData.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOption === "Z-A") {
+      sortedData.sort((a, b) => b.name.localeCompare(a.name));
+    } else {
+      sortedData = initialBinsData;
+    }
+
+    setBinsData(sortedData);
+  };
+
   const handleStatusFilterChange = (e) => setStatusFilter(e.target.value);
   const handleSearchChange = (e) => setSearchText(e.target.value);
   const handleBinNameChange = (e) => setBinNameFilter(e.target.value);
@@ -114,7 +117,6 @@ const BinsDataPage = () => {
     setBinsData(binsData.filter(bin => bin.id !== binId));
   };
 
-  // Filter binsData based on bin name, status, and general search across multiple fields
   const filteredBinsData = binsData.filter((bin) => {
     const matchesBinName = bin.name.toLowerCase().includes(binNameFilter.toLowerCase());
     const matchesStatus = statusFilter ? bin.status === statusFilter : true;
@@ -134,179 +136,188 @@ const BinsDataPage = () => {
   return (
     <Box className="bins-data-page">
       <BinsHeader />
-      
-      <Box className="bins-content">
-        <Typography variant="h5" className="bins-title">Bins data</Typography>
-        <Typography variant="body2" color="textSecondary" className="bins-subtitle">
-          See all of your bin items here.
-        </Typography>
 
-        <Box className="bins-filters">
-          <Box className="left-filters">
-            <Select
-              value={filter}
-              onChange={handleFilterChange}
-              displayEmpty
-              variant="outlined"
-              className="filter-dropdown"
-            >
-              <MenuItem value="">Show: All products</MenuItem>
-              <MenuItem value="Type1">Type1</MenuItem>
-              <MenuItem value="Type2">Type2</MenuItem>
-            </Select>
-            <Box className="sort-options">
-              <Typography variant="body2" color="textSecondary">A - Z</Typography>
-              <Typography variant="body2" color="textSecondary">Z - A</Typography>
-            </Box>
-          </Box>
+      <TableContainer component={Paper} className="table-container">
+        <Table>
+          <TableHead>
+            {/* First Row: Filter, Sort, and Search Controls */}
+            <TableRow className="first-row">
+              <TableCell colSpan={8}>
+              <Typography variant="h5" className="bins-title">Bins data</Typography>
+              <Typography variant="body2" color="textSecondary" className="bins-subtitle">
+                See all of your bin items here.
+              </Typography>
+                  <Box className="bins-filters">
+                  <Box className="left-filters">
+                    <Select
+                      value={filter}
+                      onChange={handleFilterChange}
+                      displayEmpty
+                      variant="outlined"
+                      className="filter-dropdown"
+                    >
+                      <MenuItem value="">Show: All products</MenuItem>
+                      <MenuItem value="A-Z">A - Z</MenuItem>
+                      <MenuItem value="Z-A">Z - A</MenuItem>
+                    </Select>
+                    <Box className="sort-options">
+                      <Typography variant="body2" color="textSecondary">A - Z</Typography>
+                      <Typography variant="body2" color="textSecondary">Z - A</Typography>
+                    </Box>
+                  </Box>
 
-          <Box className="right-filters">
-            <TextField
-              variant="outlined"
-              size="small"
-              placeholder="Bin Name"
-              className="text-field"
-              value={binNameFilter}
-              onChange={handleBinNameChange}
-            />
+                  <Box className="right-filters">
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      placeholder="Bin Name"
+                      className="text-field"
+                      value={binNameFilter}
+                      onChange={handleBinNameChange}
+                    />
 
-            {/* Status filter with dot indicator in front */}
-            <Box display="flex" alignItems="center" className="status-filter-container">
-              <Select
-                value={statusFilter}
-                onChange={handleStatusFilterChange}
-                displayEmpty
-                variant="outlined"
-                className="status-filter"
-              >
-                <MenuItem value="">Select Status</MenuItem>
-                <MenuItem value="Active">Active</MenuItem>
-                <MenuItem value="Inactive">Inactive</MenuItem>
-              </Select>
-            </Box>
-
-            <TextField
-              variant="outlined"
-              size="small"
-              placeholder="Search"
-              value={searchText}
-              onChange={handleSearchChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => setSearchText('')} edge="end">
-                      <Typography color="primary" fontSize="small">Clear</Typography>
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              className="text-field"
-            />
-          </Box>
-        </Box>
-
-        <TableContainer component={Paper} className="table-container">
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Image</TableCell>
-                <TableCell>Pickup Time</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>MRF Collector</TableCell>
-                <TableCell>Pickup Schedule</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredBinsData.map((bin) => (
-                <TableRow key={bin.id}>
-                  <TableCell>{bin.name}</TableCell>
-                  <TableCell>
-                    <img src={bin.image} alt={bin.name} width={40} height={40} />
-                  </TableCell>
-                  <TableCell>{bin.pickupTime}</TableCell>
-                  <TableCell>
-                    <div className="location-cell">
-                      {bin.location || `Latitude: ${bin.latitude}... Longitude: ${bin.longitude}...`}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Box display="flex" alignItems="center">
-                      {/* Status dropdown first, then the dot to the right */}
+                    <Box display="flex" alignItems="center" className="status-filter-container">
                       <Select
-                        value={bin.status}
-                        onChange={(e) => handleStatusChange(bin.id, e.target.value)}
+                        value={statusFilter}
+                        onChange={handleStatusFilterChange}
                         displayEmpty
                         variant="outlined"
-                        size="small"
-                        style={{ minWidth: 100 }}
+                        className="status-filter"
                       >
+                        <MenuItem value="">Select Status</MenuItem>
                         <MenuItem value="Active">Active</MenuItem>
                         <MenuItem value="Inactive">Inactive</MenuItem>
                       </Select>
-                      <span className={`status-dot ${bin.status === 'Active' ? 'active-dot' : 'inactive-dot'}`}></span>
                     </Box>
-                  </TableCell>
-                  <TableCell>{bin.collector}</TableCell>
-                  <TableCell>{bin.schedule}</TableCell>
-                  <TableCell>
-                    <div className="action-icons">
-                      <IconButton color="primary" onClick={() => handleEditClick(bin)}>
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton color="error" onClick={() => handleDeleteClick(bin.id)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
 
-        <Box className="bins-pagination">
-          <Typography variant="body2">1-10 of {filteredBinsData.length}</Typography>
-          <Pagination
-            count={10}
-            page={page}
-            onChange={(e, newPage) => setPage(newPage)}
-            color="primary"
-            showFirstButton
-            showLastButton
-          />
-          
-          <Box display="flex" alignItems="center" gap={1}>
-            <Typography variant="body2">Rows per page:</Typography>
-            <Select
-              value={rowsPerPage}
-              onChange={handleRowsPerPageChange}
-              variant="outlined"
-              size="small"
-              className="rows-per-page"
-            >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-            </Select>
-          </Box>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      placeholder="Search"
+                      value={searchText}
+                      onChange={handleSearchChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={() => setSearchText('')} edge="end">
+                              <Typography color="primary" fontSize="small">Clear</Typography>
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      className="text-field"
+                    />
+                  </Box>
+                </Box>
+              </TableCell>
+            </TableRow>
 
-          <Box display="flex" alignItems="center" gap={1}>
-            <Typography variant="body2">Jump to:</Typography>
-            <TextField
-              variant="outlined"
-              size="small"
-              value={jumpToPage}
-              onChange={handleJumpToPageChange}
-              onBlur={handleJumpToPageSubmit}
-              className="jump-to-page"
-              placeholder="Page"
-            />
-          </Box>
-        </Box>
-      </Box>
+            {/* Second Row: Column Headers */}
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Image</TableCell>
+              <TableCell>Pickup Time</TableCell>
+              <TableCell>Location</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>MRF Collector</TableCell>
+              <TableCell>Pickup Schedule</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {filteredBinsData.map((bin) => (
+              <TableRow key={bin.id}>
+                <TableCell>{bin.name}</TableCell>
+                <TableCell>
+                  <img src={bin.image} alt={bin.name} width={40} height={40} />
+                </TableCell>
+                <TableCell>{bin.pickupTime}</TableCell>
+                <TableCell>
+                  <div className="location-cell">
+                    {bin.location || `Latitude: ${bin.latitude}... Longitude: ${bin.longitude}...`}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <Box display="flex" alignItems="center">
+                    <Select
+                      value={bin.status}
+                      onChange={(e) => handleStatusChange(bin.id, e.target.value)}
+                      displayEmpty
+                      variant="outlined"
+                      size="small"
+                      style={{ minWidth: 100 }}
+                    >
+                      <MenuItem value="Active">Active</MenuItem>
+                      <MenuItem value="Inactive">Inactive</MenuItem>
+                    </Select>
+                    <span className={`status-dot ${bin.status === 'Active' ? 'active-dot' : 'inactive-dot'}`}></span>
+                  </Box>
+                </TableCell>
+                <TableCell>{bin.collector}</TableCell>
+                <TableCell>{bin.schedule}</TableCell>
+                <TableCell>
+                  <div className="action-icons">
+                    <IconButton color="primary" onClick={() => handleEditClick(bin)}>
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton color="error" onClick={() => handleDeleteClick(bin.id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+
+          {/* Last Row: Pagination */}
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={8}>
+                <Box className="bins-pagination">
+                  <Typography variant="body2">1-10 of {filteredBinsData.length}</Typography>
+                  <Pagination
+                    count={10}
+                    page={page}
+                    onChange={(e, newPage) => setPage(newPage)}
+                    color="primary"
+                    showFirstButton
+                    showLastButton
+                  />
+
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography variant="body2">Rows per page:</Typography>
+                    <Select
+                      value={rowsPerPage}
+                      onChange={handleRowsPerPageChange}
+                      variant="outlined"
+                      size="small"
+                      className="rows-per-page"
+                    >
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={10}>10</MenuItem>
+                    </Select>
+                  </Box>
+
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography variant="body2">Jump to:</Typography>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      value={jumpToPage}
+                      onChange={handleJumpToPageChange}
+                      onBlur={handleJumpToPageSubmit}
+                      className="jump-to-page"
+                      placeholder="Page"
+                    />
+                  </Box>
+                </Box>
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
 
       {selectedBin && (
         <BinEditModal

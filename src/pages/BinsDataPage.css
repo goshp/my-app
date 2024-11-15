@@ -35,6 +35,10 @@
   gap: 16px;
 }
 
+.first-row {
+  background-color: #ffffff !important; /* White background color */
+}
+
 .right-filters {
   display: flex;
   align-items: center;
