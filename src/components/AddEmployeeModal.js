@@ -23,7 +23,6 @@ const AddEmployeeModal = ({ open, onClose, onSubmit }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -31,7 +30,7 @@ const AddEmployeeModal = ({ open, onClose, onSubmit }) => {
   // Handle form submission
   const handleSubmit = () => {
     onSubmit(formData);
-    onClose(); // Close the modal after submitting
+    onClose();
   };
 
   return (
@@ -49,7 +48,6 @@ const AddEmployeeModal = ({ open, onClose, onSubmit }) => {
       <DialogContent dividers>
         <Box component="form" noValidate>
           <Grid container spacing={2}>
-            {/* First Name and Last Name */}
             <Grid item xs={6}>
               <TextField
                 label="First Name"
@@ -93,7 +91,6 @@ const AddEmployeeModal = ({ open, onClose, onSubmit }) => {
               />
             </Grid>
 
-            {/* Password with visibility toggle */}
             <Grid item xs={6}>
               <TextField
                 label="Password"
@@ -117,7 +114,6 @@ const AddEmployeeModal = ({ open, onClose, onSubmit }) => {
       </DialogContent>
       <DialogActions sx={{ paddingX: 3, paddingY: 2 }}>
         <Grid container spacing={2}>
-          {/* Cancel button aligned with Password */}
           <Grid item xs={6}>
             <Button
               onClick={onClose}
@@ -130,7 +126,6 @@ const AddEmployeeModal = ({ open, onClose, onSubmit }) => {
             </Button>
           </Grid>
 
-          {/* Submit button aligned with Email */}
           <Grid item xs={6}>
             <Button
               onClick={handleSubmit}

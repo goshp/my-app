@@ -5,7 +5,6 @@ import EditItemModal from '../components/EditItemModal';
 import { Box, Typography, Select, MenuItem, Pagination, TextField } from '@mui/material';
 import './ScannedItemsPage.css';
 
-// Initial data for scanned and arrived items
 const initialScannedItemsData = [
   { id: 1, item: "Battery", status: "Approved", brand: "Apple", dims: "12 oz PET", 
     parts: "Label, Tag", rewards: 10, date: "17/12/2023", location: "Toronto", 
@@ -40,18 +39,15 @@ const ScannedItemsPage = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // Pagination state
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [jumpToPage, setJumpToPage] = useState('');
 
-  // Open modal for editing
   const handleEditClick = (item) => {
     setSelectedItem(item);
     setModalOpen(true);
   };
 
-  // Update item data after editing
   const handleUpdateItem = (updatedItem) => {
     const updateArray = (array) =>
       array.map((item) =>
@@ -63,10 +59,9 @@ const ScannedItemsPage = () => {
     setModalOpen(false);
   };
 
-  // Pagination handlers
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(1); // Reset to the first page when rows per page changes
+    setPage(1);
   };
 
   const handleJumpToPageChange = (event) => {
@@ -78,7 +73,7 @@ const ScannedItemsPage = () => {
     if (pageNumber >= 1 && pageNumber <= Math.ceil(scannedItemsData.length / rowsPerPage)) {
       setPage(pageNumber);
     }
-    setJumpToPage(''); // Clear input after submission
+    setJumpToPage('');
   };
 
   return (
@@ -108,11 +103,10 @@ const ScannedItemsPage = () => {
       <EditItemModal
         open={isModalOpen}
         onClose={() => setModalOpen(false)}
-        itemData={selectedItem}  // Update to itemData
+        itemData={selectedItem}
         onSave={handleUpdateItem}
       />
 
-      {/* Pagination Controls */}
       <Box className="bins-pagination">
         <Typography variant="body2">1-10 of {scannedItemsData.length}</Typography>
         <Pagination
@@ -124,7 +118,6 @@ const ScannedItemsPage = () => {
           showLastButton
         />
         
-        {/* Rows per page selection */}
         <Box display="flex" alignItems="center" gap={1}>
           <Typography variant="body2">Rows per page:</Typography>
           <Select
@@ -140,7 +133,6 @@ const ScannedItemsPage = () => {
           </Select>
         </Box>
 
-        {/* Jump to page */}
         <Box display="flex" alignItems="center" gap={1}>
           <Typography variant="body2">Jump to:</Typography>
           <TextField

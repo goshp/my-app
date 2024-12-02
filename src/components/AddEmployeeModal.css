@@ -1,5 +1,3 @@
-/* Center the labels above inputs, adjust padding, and ensure consistent spacing */
-
 .MuiDialogContent-root {
     display: flex;
     flex-direction: column;

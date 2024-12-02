@@ -90,8 +90,7 @@ const EmployeesPage = () => {
       <TableContainer component={Paper} className="table-container">
         <Table>
           <TableHead>
-            {/* First row with header controls inside the table */}
-            <TableRow>
+            <TableRow style={{ backgroundColor: 'white' }}>
               <TableCell colSpan={6}>
                 <div className="employees-header">
                   <div className="header-title">
@@ -134,7 +133,6 @@ const EmployeesPage = () => {
               </TableCell>
             </TableRow>
 
-            {/* Second row with column titles */}
             <TableRow>
               <TableCell>Image</TableCell>
               <TableCell>First Name</TableCell>

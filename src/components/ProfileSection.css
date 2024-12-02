@@ -37,7 +37,6 @@
 }
 
 
-/* Adjust flex layout if needed */
 .profile-section .form-group {
   display: flex;
   flex-direction: column;
@@ -48,7 +47,6 @@
     margin-bottom: 16px;
 }
   
-  /* Align the form fields in two columns on larger screens */
 .profile-section form {
   display: grid;
   grid-template-columns: 1fr;
@@ -61,7 +59,6 @@
     }
   }
   
-  /* Upload area styling */
   .profile-section .upload-container {
     display: flex;
     flex-direction: column;
@@ -74,7 +71,6 @@
     text-align: center;
   }
   
-  /* Buttons styling */
   .profile-section .buttons {
     display: flex;
     justify-content: flex-end;

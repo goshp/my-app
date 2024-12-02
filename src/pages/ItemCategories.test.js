@@ -1,4 +1,3 @@
-// ItemCategories.test.js
 import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -26,7 +25,6 @@ describe('ItemCategories Component', () => {
     const sortSelect = screen.getByText(/Sort by: Default/i);
     userEvent.click(sortSelect);
 
-    // Wait for the "A - Z" option to appear, use a function to match partial text if it is not exact
     await waitFor(() => {
       expect(screen.queryByText((content, element) => 
         element.tagName.toLowerCase() === 'li' && content.includes('A - Z')
@@ -38,7 +36,7 @@ describe('ItemCategories Component', () => {
     ));
 
     await waitFor(() => {
-      const rows = screen.getAllByRole('row').slice(1); // Skip header row
+      const rows = screen.getAllByRole('row').slice(1);
       const itemNames = rows.map(row => row.cells[0].textContent);
       expect(itemNames).toEqual(['Plastic Bottles', 'Plastic Fruit & Vegetable Containers']);
     });
@@ -48,7 +46,7 @@ describe('ItemCategories Component', () => {
     renderWithRouter(<ItemCategories />);
     
     const deleteButtons = screen.getAllByRole('button', { name: '' });
-    userEvent.click(deleteButtons[0]);  // Delete the first item
+    userEvent.click(deleteButtons[0]);
 
     await waitFor(() => {
       expect(screen.queryByText('Plastic Bottles')).not.toBeInTheDocument();
@@ -61,7 +59,6 @@ describe('ItemCategories Component', () => {
     const sortSelect = screen.getByText(/Sort by: Default/i);
     userEvent.click(sortSelect);
 
-    // Wait for the dropdown options to appear
     await waitFor(() => {
       expect(screen.getByText('A - Z')).toBeInTheDocument();
     });

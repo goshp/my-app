@@ -58,7 +58,7 @@ const ItemCategories = () => {
     } else if (value === "Z-A") {
       sortedData.sort((a, b) => b.name.localeCompare(a.name));
     } else {
-      sortedData = initialData; // Reset to initial unsorted data if "Default" is selected
+      sortedData = initialData;
     }
 
     setData(sortedData);
@@ -104,7 +104,6 @@ const ItemCategories = () => {
     <Box className="item-categories-page" p={8}>
       <ItemCatHeader />
       
-      {/* Spacing Box */}
       <Box mb={3} />
 
       <TableContainer component={Paper} className="table-container">
@@ -112,7 +111,6 @@ const ItemCategories = () => {
           <TableHead>
             <TableRow>
               <TableCell colSpan={7}>
-                {/* Header and Controls */}
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Box>
                     <Typography variant="h5" component="h1" className="title">Item Categories</Typography>

@@ -18,7 +18,6 @@
   cursor: pointer;
 }
 
-/* Navigation Links */
 .nav-links {
   display: flex;
   flex-grow: 1;
@@ -33,7 +32,7 @@
   position: relative;
   cursor: pointer;
   transition: color 0.3s;
-  white-space: nowrap; /* Prevents wrapping */
+  white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -59,7 +58,6 @@
   transform-origin: left;
 }
 
-/* Badge and Profile Icon Section */
 .badge-icons {
   display: flex;
   align-items: center;
@@ -82,7 +80,6 @@
   height: 18px;
 }
 
-/* Profile Icon Styling */
 .prof-icon {
   width: 32px;
   height: 32px;
@@ -91,7 +88,6 @@
   margin-left: 8px;
 }
 
-/* Pulse animation for badges */
 .badgeblink {
   animation: blink 1.5s infinite;
 }

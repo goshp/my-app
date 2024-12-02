@@ -4,13 +4,13 @@
 }
 
 .status-dropdown {
-    min-width: 100px; /* Smaller dropdown width */
-    margin-right: 8px; /* Space between dropdown and dot */
-    font-size: 0.875em; /* Optional: reduce font size for smaller look */
+    min-width: 100px;
+    margin-right: 8px;
+    font-size: 0.875em;
     height: 20px;
     border-radius: 6px;
 }
 
 .status-dot {
-    font-size: 0.75em; /* Smaller dot size */
+    font-size: 0.75em;
 }

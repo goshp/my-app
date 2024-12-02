@@ -1,25 +1,22 @@
-/* Container for the header */
 .item-cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 60px; /* Explicitly set header height */
   z-index: 1000;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  border-bottom: 1px solid #e0e0e0;
-}
-/* Company Logo */
-.company-logo {
-  height: 45px;
-  margin-right: 20px;
 }
 
-/* Navigation Links */
+.company-logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
 .nav-links {
   display: flex;
   gap: 20px;
@@ -49,7 +46,6 @@
   border-radius: 20px;
 }
 
-/* Badge Icons */
 .badge-icons {
   display: flex;
   align-items: center;
@@ -78,15 +74,14 @@
   color: #333;
 }
 
-/* Profile Icon */
 .profile-icon {
   height: 40px;
   width: 40px;
   border-radius: 50%;
   cursor: pointer;
 }
-  /* Subtle Glow Animation */
-  @keyframes blink {
+
+@keyframes blink {
     0%, 100% {
       opacity: 1;
     }

@@ -31,20 +31,15 @@ test('filters items by brand', async () => {
     render(<ItemsTable title="Scanned Items" subtitle="See all of your scanned items here." data={mockData} onEdit={() => {}} showFilters={true} />);
   });
 
-  // Locate and open the "Select Brand" dropdown
   const brandSelectCombobox = screen.getByRole('combobox', { name: /brand filter/i });
   userEvent.click(brandSelectCombobox);
 
-  // Wait for the "Apple" option to appear in the dropdown and select it
   const appleOption = await screen.findByRole('option', { name: 'Apple' });
   userEvent.click(appleOption);
 
-  // Wait for the table to update and verify only items with "Apple" as the brand are visible
   await waitFor(() => {
-    // "Battery" from "Apple" should be visible
     expect(screen.getByText('Battery')).toBeInTheDocument();
 
-    // "Paper Drink" from "Starbucks" should not be visible
     expect(screen.queryByText('Paper Drink')).toBeNull();
   });
 });

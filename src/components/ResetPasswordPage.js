@@ -45,9 +45,8 @@ function ResetPasswordPage() {
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
     } else {
-      // Handle password reset logic (e.g., API call)
       alert('Password successfully reset!');
-      navigate('/'); // Redirect to login page after reset
+      navigate('/'); 
     }
   };
 
@@ -65,7 +64,7 @@ function ResetPasswordPage() {
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
-              setError(''); // Clear error message as user types
+              setError('');
             }}
             required
           />
@@ -77,7 +76,7 @@ function ResetPasswordPage() {
             value={confirmPassword}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
-              setError(''); // Clear error message as user types
+              setError('');
             }}
             required
           />

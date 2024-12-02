@@ -1,10 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
-import LoginPage from './pages/LoginPage'; // Adjust path as needed
+import LoginPage from './pages/LoginPage';
 import { useNavigate } from 'react-router-dom';
 
-// Mock the useNavigate hook
 const mockNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -14,7 +13,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('LoginPage Component', () => {
   beforeEach(() => {
-    jest.clearAllMocks(); // Clear mocks between tests
+    jest.clearAllMocks();
   });
 
   test('logs in as Admin and navigates to /scanned-items on success', () => {
@@ -24,12 +23,10 @@ describe('LoginPage Component', () => {
       </MemoryRouter>
     );
 
-    // Simulate login as Admin
     fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'gosikhena@gmail.com' } });
     fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'Peniel2015$' } });
     fireEvent.click(screen.getByText('Log in'));
 
-    // Check if navigate was called with '/scanned-items'
     expect(mockNavigate).toHaveBeenCalledWith('/scanned-items');
   });
 
@@ -40,13 +37,11 @@ describe('LoginPage Component', () => {
       </MemoryRouter>
     );
 
-    // Switch to Employee and simulate login
     fireEvent.click(screen.getByText('Employee'));
     fireEvent.change(screen.getByPlaceholderText('Enter your email'), { target: { value: 'employee@example.com' } });
     fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'Employee2023$' } });
     fireEvent.click(screen.getByText('Log in'));
 
-    // Check if navigate was called with '/scanned-items'
     expect(mockNavigate).toHaveBeenCalledWith('/scanned-items');
   });
 

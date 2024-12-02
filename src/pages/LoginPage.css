@@ -97,11 +97,10 @@ input {
   border-radius: 5px;
 }
 
-/* Style for checkbox and text alignment */
 .options {
   display: flex;
   align-items: center;
-  width: 80%; /* Keep consistent with form width */
+  width: 80%;
   justify-content: space-between;
   margin-bottom: 20px;
 }
@@ -151,7 +150,6 @@ input {
   text-decoration: none;
 }
 
-/* Additional terms text and footer styling */
 .terms-text {
   font-size: 12px;
   color: #999;

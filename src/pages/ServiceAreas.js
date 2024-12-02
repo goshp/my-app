@@ -93,13 +93,12 @@ const ServiceAreas = () => {
   };
 
   return (
-    <Box className="service-areas-page" sx={{ paddingTop: '64px' }}> {/* Adjust this value if needed */}
+    <Box className="service-areas-page" sx={{ paddingTop: '64px' }}>
       <ServAreaHeader />
 
-      <TableContainer component={Paper} className="table-container" sx={{ marginTop: '20px' }}> {/* Adding top margin */}
+      <TableContainer component={Paper} className="table-container" sx={{ marginTop: '20px' }}>
         <Table>
           <TableHead>
-            {/* First Row: Filter, Sort, and Action Buttons */}
             <TableRow>
               <TableCell colSpan={7}>
                 <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -113,7 +112,7 @@ const ServiceAreas = () => {
                       <Button
                         variant="outlined"
                         component="span"
-                        style={{ color: "#000000", borderColor: "#d3d3d3" }} // Black text and light grey border
+                        style={{ color: "#000000", borderColor: "#d3d3d3" }}
                       >
                         Add by Excel
                       </Button>
@@ -148,7 +147,6 @@ const ServiceAreas = () => {
               </TableCell>
             </TableRow>
 
-            {/* Second Row: Table Headers */}
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Image</TableCell>
@@ -190,7 +188,6 @@ const ServiceAreas = () => {
             ))}
           </TableBody>
 
-          {/* Last Row: Pagination */}
           <TableFooter>
             <TableRow>
               <TableCell colSpan={7}>

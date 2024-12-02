@@ -49,16 +49,14 @@ const ProfileSection = ({ title, subtitle, fields, uploadEnabled, onSave, onCanc
           mb: 3,
         }}
       >
-        {/* Profile Image on the Left */}
         {uploadEnabled && (
           <Avatar
             src={formData.profileImage || 'https://via.placeholder.com/100'}
             alt="Profile"
-            sx={{ width: 80, height: 80, mt: 1.5 }} // mt adjusts vertical alignment with the line
+            sx={{ width: 80, height: 80, mt: 1.5 }}
           />
         )}
 
-        {/* Upload Container */}
         {uploadEnabled && (
           <Box
             sx={{
@@ -70,7 +68,7 @@ const ProfileSection = ({ title, subtitle, fields, uploadEnabled, onSave, onCanc
               borderRadius: 2,
               textAlign: 'center',
               flex: 1,
-              mt: 1.5, // Align the container with the avatar
+              mt: 1.5, 
             }}
           >
             <input
@@ -93,7 +91,6 @@ const ProfileSection = ({ title, subtitle, fields, uploadEnabled, onSave, onCanc
         )}
       </Box>
 
-      {/* Form Fields */}
       <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: '1fr 1fr' }}>
         {fields.map((field) => (
           <FormControl key={field.name} fullWidth>
@@ -127,7 +124,6 @@ const ProfileSection = ({ title, subtitle, fields, uploadEnabled, onSave, onCanc
         ))}
       </Box>
 
-      {/* Action Buttons */}
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
         <Button onClick={onCancel} variant="outlined" sx={{ mr: 2 }}>
           Cancel

@@ -16,20 +16,43 @@
     justify-content: space-between;
 }
 
-.cancel-btn {
-    color: #888;
-    border: 1px solid #888;
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+    align-items: center;
 }
 
-.cancel-btn:hover {
+.cancel-button {
     background-color: #f0f0f0;
+    color: #333;
+    border-radius: 6px;
+    padding: 10px 20px;
 }
 
-.save-btn {
+.save-button {
     background-color: #28a745;
-    color: white;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 10px 20px;
 }
 
-.save-btn:hover {
+.save-button:hover {
     background-color: #218838;
+}
+
+
+.cancel-button:hover {
+    background-color: #e0e0e0;
+}
+
+.cancel-button, .save-button {
+    flex: 1; 
+    width: 60%;
+    padding: 5px 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: none;
+    border-radius: 6px;
 }

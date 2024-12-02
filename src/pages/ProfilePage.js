@@ -16,7 +16,6 @@ const ProfilePage = () => {
     <div style={{ paddingTop: '80px' }}>
       <ProfileHeader />
 
-      {/* Personal Info Section */}
       <ProfileSection
         title="Personal Info"
         subtitle="Update your photo and personal info here."
@@ -34,11 +33,10 @@ const ProfilePage = () => {
         onCancel={handleCancel}
       />
 
-      {/* Contact Info Section */}
       <ProfileSection
         title="Contact Info"
         subtitle="Update your contact information here."
-        sectionType="contact"  // Controls layout for Contact Info
+        sectionType="contact"
         fields={[
           { label: 'Country', name: 'country', type: 'select', options: ['United States', 'Canada', 'UK'], defaultValue: 'United States' },
           { label: 'City', name: 'city', type: 'text', defaultValue: 'Dallas' },
@@ -52,11 +50,10 @@ const ProfilePage = () => {
         onCancel={handleCancel}
       />
 
-      {/* Company Info Section */}
       <ProfileSection
         title="Company Info"
         subtitle="Update your company information here."
-        sectionType="company"  // Controls layout for Company Info
+        sectionType="company"
         uploadEnabled={true}
         fields={[
           { label: 'Company Name', name: 'companyName', type: 'text', defaultValue: 'Tech Solutions' },

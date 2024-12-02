@@ -44,7 +44,6 @@ const initialBinsData = [
     collector: "Trooswell Davis",
     schedule: "Monday, Tuesday, Wednesday",
   },
-  // Add more bin data as needed
 ];
 
 const BinsDataPage = () => {
@@ -134,13 +133,12 @@ const BinsDataPage = () => {
   });
 
   return (
-    <Box className="bins-data-page">
+    <Box className="bins-data-page" p={7}>
       <BinsHeader />
 
       <TableContainer component={Paper} className="table-container">
         <Table>
           <TableHead>
-            {/* First Row: Filter, Sort, and Search Controls */}
             <TableRow className="first-row">
               <TableCell colSpan={8}>
               <Typography variant="h5" className="bins-title">Bins data</Typography>
@@ -212,7 +210,6 @@ const BinsDataPage = () => {
               </TableCell>
             </TableRow>
 
-            {/* Second Row: Column Headers */}
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Image</TableCell>
@@ -270,7 +267,6 @@ const BinsDataPage = () => {
             ))}
           </TableBody>
 
-          {/* Last Row: Pagination */}
           <TableFooter>
             <TableRow>
               <TableCell colSpan={8}>

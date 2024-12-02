@@ -47,11 +47,10 @@ const BinsHeader = () => {
           <img src={badgeGreen} alt="Green Badge" className="badge-icon" />
           <span>2,515</span>
         </div>
+        <IconButton>
+          <img src={profileIcon} alt="Profile" className="bins-profile-icon" />
+        </IconButton>
       </Box>
-
-      <IconButton>
-        <img src={profileIcon} alt="Profile" className="bins-profile-icon" />
-      </IconButton>
     </Box>
   );
 };

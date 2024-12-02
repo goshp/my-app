@@ -17,7 +17,6 @@
     margin-right: 10px;
 }
 
-/* Navigation Styling */
 .nav {
     display: flex;
     gap: 10px;
@@ -35,7 +34,7 @@
 }
 
 .nav .active-link {
-    color: #28a745;
+    color: #02B74F;
     background-color: #e6f7ee;
     padding: 5px 15px;
     border-radius: 20px;
@@ -46,15 +45,14 @@
     background-color: #e6f7ee;
 }
 
-/* Header Icons Styling */
 .header-icons-container {
     display: flex;
     align-items: center;
     gap: 8px;
     background-color: #f5f5f5;
-    padding: 4px 8px; /* Reduced padding to make the container more compact */
-    border-radius: 15px; /* Adjusted for a tighter look */
-    height: 32px; /* Reduced height */
+    padding: 4px 8px;
+    border-radius: 15px;
+    height: 32px;
 }
 
 .badge-container {
@@ -64,8 +62,8 @@
 }
 
 .badge-icon {
-    width: 18px; /* Reduced width for badges */
-    height: 18px; /* Reduced height for badges */
+    width: 18px;
+    height: 18px;
 }
 
 .badge-number {
@@ -78,13 +76,12 @@
 }
 
 .profile-icon {
-    width: 20px; /* Reduced width for profile icon */
-    height: 20px; /* Reduced height for profile icon */
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-/* Blinking Animation */
 @keyframes blink {
     0%, 100% {
         opacity: 1;

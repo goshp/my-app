@@ -42,7 +42,7 @@ tbody td {
 
 .rewards-container {
   display: flex;
-  gap: 4px !important; /* Reduce gap between items */
+  gap: 4px !important;
 }
 
 .reward-item {
@@ -54,14 +54,14 @@ tbody td {
 }
 
 .reward-icon {
-  width: 12px !important; /* Smaller width for icon */
-  height: 12px !important; /* Smaller height for icon */
-  margin-right: 2px !important; /* Adjust margin between icon and text */
+  width: 12px !important; 
+  height: 12px !important;
+  margin-right: 2px !important;
   animation: blink 1.5s infinite;
 }
 
 .reward-item .reward-number {
-  font-size: 0.75em !important; /* Smaller font for text inside reward items */
+  font-size: 0.75em !important;
 }
 
 @keyframes blink {

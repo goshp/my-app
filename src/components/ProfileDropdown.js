@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import profileIcon from './assets/avatar3@3x.png'; // Path to your profile icon
+import profileIcon from './assets/avatar3@3x.png';
 
 const ProfileDropdown = () => {
   const [anchorEl, setAnchorEl] = useState(null);

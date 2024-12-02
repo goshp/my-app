@@ -2,12 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px; /* Reduced top/bottom padding slightly */
+  padding: 8px 20px;
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
   top: 0;
   z-index: 1000;
-  position: fixed; /* Fixes the header to the top */
+  position: fixed;
   left: 0;
   right: 0;
 }
@@ -16,16 +16,14 @@ html, body {
   padding: 0;
 }
 
-/* Logo Styling */
 .logo {
   height: 40px;
   margin-right: 10px;
 }
 
-/* Navigation Styling */
 .nav {
   display: flex;
-  gap: 10px; /* Reduced gap between nav items */
+  gap: 10px;
   font-size: 1em;
   font-weight: 600;
   color: #555;
@@ -34,7 +32,7 @@ html, body {
 .nav span {
   cursor: pointer;
   color: #555;
-  padding: 4px 10px; /* Adjusted padding for more compact appearance */
+  padding: 4px 10px;
   border-radius: 20px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -51,17 +49,20 @@ html, body {
   background-color: #e6f7ee;
 }
 
-/* Badge and Profile Layout */
 .header-icons {
   display: flex;
   align-items: center;
-  gap: 10px; /* Reduced gap between icons */
+  gap: 8px;
+  background-color: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 15px;
+  height: 32px;
 }
 
 .badge-container {
   display: flex;
   align-items: center;
-  gap: 4px; /* Reduced gap between badge and number */
+  gap: 4px;
 }
 
 .badge-icon {
@@ -77,11 +78,10 @@ html, body {
 .profile-icon {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 60%;
   object-fit: cover;
 }
 
-/* Blinking Animation */
 @keyframes blink {
   0%, 100% {
       opacity: 1;

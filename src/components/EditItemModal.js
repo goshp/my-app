@@ -152,13 +152,9 @@ const EditItemModal = ({ open, onClose, itemData = {}, onSave }) => {
           </Box>
         </Box>
       </DialogContent>
-      <DialogActions sx={{ justifyContent: 'space-between' }}>
-        <Button onClick={onClose} color="secondary" variant="outlined" className="cancel-btn">
-          Cancel
-        </Button>
-        <Button onClick={handleSave} color="success" variant="contained" className="save-btn">
-          Update
-        </Button>
+      <DialogActions className="modal-footer">
+        <Button onClick={onClose} className="cancel-button">Cancel</Button>
+        <Button onClick={handleSave} className="save-button">Update Bin</Button>
       </DialogActions>
     </Dialog>
   );

@@ -21,7 +21,7 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
   const applyFilters = useCallback(() => {
     let filteredItems = [...data];
 
-    // Sort items if a sort option is selected
+    // Sort items when selected
     if (sortOption !== "Default") {
       filteredItems.sort((a, b) =>
         sortOption === "A-Z" ? a.item.localeCompare(b.item) : b.item.localeCompare(a.item)
@@ -84,7 +84,6 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
           {date && <p style={{ fontSize: '0.875em', color: '#666', marginTop: '4px' }}>{date}</p>}
         </div>
 
-        {/* Filters and Sort - Display only if showFilters is true */}
         {showFilters && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
             <Box position="relative" display="flex" alignItems="center">
@@ -101,13 +100,12 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
                 </Select>
               </FormControl>
               
-              {/* A-Z | Z-A Text with Overlapping Effect */}
               <Typography
                 variant="body2"
                 style={{
                   color: '#888',
                   position: 'absolute',
-                  right: '-40px', // adjust position to create overlap effect
+                  right: '-40px',
                   top: '50%',
                   transform: 'translateY(-50%)',
                 }}
@@ -174,7 +172,6 @@ const ItemsTable = ({ title, subtitle, date, data, onEdit, showFilters }) => {
         )}
       </div>
 
-      {/* Table */}
       <Table>
         <TableHead>
           <TableRow>

@@ -1,7 +1,7 @@
 .employees-page {
   font-family: Arial, sans-serif;
   padding: 80px 20px 20px;
-  background-color: #f9f9f9;
+  background-color: white;
   z-index: 1;
 }
 
@@ -73,5 +73,5 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-left: -5px; /* Adjusts the image alignment to the left */
+  margin-left: -5px;
 }

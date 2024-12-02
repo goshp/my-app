@@ -1,5 +1,3 @@
-/* /components/EmployeeHeader.css */
-
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -60,7 +58,7 @@
   }
   
   .green {
-    color: #27a745;
+    color: #02B74F;
   }
   
   .profile-picture {

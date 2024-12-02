@@ -23,7 +23,6 @@ const ItemCatHeader = () => {
     <Box className="item-cat-header">
       <img src={companyLogo} alt="Company Logo" className="company-logo" />
 
-      {/* Navigation Links */}
       <Box className="nav-links">
         {links.map((link) => (
           <Typography
@@ -36,7 +35,6 @@ const ItemCatHeader = () => {
         ))}
       </Box>
 
-      {/* Badge Icons with Blinking Effect */}
       <Box className="badge-icons">
         <div className="badge">
           <img src={badgeSilver} alt="Silver Badge" className= "ItemCatblink" />
@@ -51,7 +49,6 @@ const ItemCatHeader = () => {
           <span>2,515</span>
         </div>
         
-      {/* Profile Icon */}
       <img src={profileIcon} alt="Profile" className="profile-icon" />
       </Box>
     </Box>

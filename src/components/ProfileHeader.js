@@ -26,7 +26,6 @@ const ProfileHeader = () => {
     <Box className="profile-header">
       <img src={companyLogo} alt="Company Logo" className="company-logo" />
 
-      {/* Navigation Links */}
       <Box className="nav-links">
         {links.map((link) => (
           <Typography
@@ -39,7 +38,6 @@ const ProfileHeader = () => {
         ))}
       </Box>
 
-      {/* Badge Icons */}
       <Box className="badge-icons">
         <div className="badge">
           <img src={badge1} alt="Silver Badge" className="badgeblink"  />

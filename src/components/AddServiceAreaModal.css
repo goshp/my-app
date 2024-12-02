@@ -30,7 +30,7 @@
 .form-column {
     display: flex;
     flex-direction: column;
-    gap: 16px; /* Space between each form item */
+    gap: 16px;
     flex: 1;
 }
 
@@ -43,7 +43,7 @@
     font-size: 0.875rem;
     font-weight: 600;
     color: #333;
-    margin-bottom: 6px; /* Space between label and field */
+    margin-bottom: 6px;
 }
 
 .image-upload {
